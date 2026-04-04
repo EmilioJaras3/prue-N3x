@@ -39,3 +39,21 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# documentacion interna y skills
+AGENTS.md
+CLAUDE.md
+*.skill.md
+SECURITY_SKILL.md
+AUTHENTICATION_SETUP.md
+DATABASE_SETUP.md
+DEPLOYMENT_FINAL.md
+QUICK_START.md
+README_RESUMEN.md
+SETUP_GUIDE.md
+SPECIAL_FEATURES.md
+UI_COMPONENTS.md
+tmp/
+.agents/
+.claude/
+.cursor/
