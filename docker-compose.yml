@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: panel_seguro_db
+    environment:
+      POSTGRES_USER: panel_user
+      POSTGRES_PASSWORD: panel_pass_2026
+      POSTGRES_DB: panel_seguro
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - panel_net
+
+volumes:
+  pg_data:
+
+networks:
+  panel_net:
+    driver: bridge
