@@ -90,8 +90,8 @@ export default async function DashboardPage() {
         <div className="lg:col-span-1">
           <aside className="h-full bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-6 flex flex-col">
             <div className="flex items-center gap-3 mb-6">
-              <ActivityIcon className="text-amber-400" size={24} />
-              <h2 className="text-lg font-bold font-manrope">Auditoría de Acciones</h2>
+              <ActivityIcon className="text-red-400" size={24} />
+              <h2 className="text-lg font-bold font-manrope">Registro de Pokédex</h2>
             </div>
             <div className="flex-1 overflow-y-auto max-h-[600px] pr-2">
               <ActionLogs />

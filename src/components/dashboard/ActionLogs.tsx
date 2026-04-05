@@ -62,22 +62,22 @@ export default function ActionLogs() {
   return (
     <div className="space-y-4 flex flex-col h-full">
       {/* Formulario Add Secret */}
-      <form onSubmit={handleSaveSecret} className="flex flex-col sm:flex-row gap-2 mb-2 p-4 bg-purple-500/10 border border-purple-500/20 rounded-xl">
+      <form onSubmit={handleSaveSecret} className="flex flex-col sm:flex-row gap-2 mb-2 p-4 bg-red-500/10 border border-red-500/20 rounded-xl">
         <input 
           type="text" 
           value={secretText}
           onChange={(e) => setSecretText(e.target.value)}
-          placeholder="Escribe un dato clasificado..."
-          className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+          placeholder="Anota un Pokémon atrapado..."
+          className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-red-500/50"
           disabled={saving}
         />
         <button 
           type="submit" 
           disabled={saving || !secretText.trim()}
-          className="bg-purple-500/20 hover:bg-purple-500/40 text-purple-300 border border-purple-500/30 px-4 py-2 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-50 whitespace-nowrap"
+          className="bg-red-500/20 hover:bg-red-500/40 text-red-300 border border-red-500/30 px-4 py-2 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-50 whitespace-nowrap"
         >
           {saving ? <LockIcon size={14} className="animate-pulse" /> : <PlusIcon size={14} />}
-          {saving ? 'Cifrando...' : 'Guardar'}
+          {saving ? 'Registrando...' : 'Registrar'}
         </button>
       </form>
 
@@ -95,18 +95,18 @@ export default function ActionLogs() {
                     : log.action_type === 'FAILED_LOGIN'
                     ? 'bg-red-400'
                     : log.action_type === 'REGISTER'
-                    ? 'bg-cyan-400'
+                    ? 'bg-slate-400'
                     : log.action_type === 'VAULT_SECRET'
-                    ? 'bg-purple-400 animate-pulse'
+                    ? 'bg-red-400 animate-pulse'
                     : 'bg-white/40'
                 }`}
               />
               <span className="text-white/80 text-sm font-medium whitespace-nowrap">
-                {log.action_type}
+                {log.action_type === 'VAULT_SECRET' ? 'CAPTURADO' : log.action_type}
               </span>
             </div>
             {log.action_type === 'VAULT_SECRET' && log.action_details ? (
-              <div className="text-purple-300/80 text-sm font-mono flex-1 overflow-hidden text-ellipsis whitespace-nowrap lg:ml-2 border-l border-white/10 lg:pl-3">
+              <div className="text-red-300/80 text-sm font-mono flex-1 overflow-hidden text-ellipsis whitespace-nowrap lg:ml-2 border-l border-white/10 lg:pl-3">
                 {log.action_details}
               </div>
             ) : null}
