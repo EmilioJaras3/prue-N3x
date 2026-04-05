@@ -26,12 +26,15 @@ export function checkRateLimit(
   };
 }
 
+// En desarrollo: límites más altos para pruebas
+const isDev = process.env.NODE_ENV === 'development';
+
 export function rateLimitLogin(ip: string) {
-  return checkRateLimit(`login:${ip}`, 5, 15 * 60 * 1000);
+  return checkRateLimit(`login:${ip}`, isDev ? 50 : 5, 15 * 60 * 1000);
 }
 
 export function rateLimitRegister(ip: string) {
-  return checkRateLimit(`register:${ip}`, 3, 60 * 60 * 1000);
+  return checkRateLimit(`register:${ip}`, isDev ? 50 : 3, 60 * 60 * 1000);
 }
 
 export function rateLimitApi(ip: string) {

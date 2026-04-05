@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ShieldCheckIcon, LockIcon, ZapIcon, BarChart3Icon } from 'lucide-react';
+import { ShieldCheckIcon, LockIcon, ZapIcon } from 'lucide-react';
 
 export default function LandingPage() {
   return (
@@ -7,19 +7,18 @@ export default function LandingPage() {
       {/* Hero Badge */}
       <div className="mb-6 animate-fade-in">
         <span className="bg-cyan-500/10 text-cyan-400 text-xs font-bold px-4 py-1.5 rounded-full border border-cyan-500/20 tracking-widest uppercase">
-          Next Gen Security
+          Panel Seguro
         </span>
       </div>
 
       {/* Main Title */}
       <h1 className="text-5xl md:text-7xl font-bold font-manrope mb-6 bg-gradient-to-b from-white to-white/40 bg-clip-text text-transparent leading-tight tracking-tighter">
-        Protege tu Identidad <br /> en la Bóveda Digital
+        Control de acceso <br /> y auditoría en tiempo real
       </h1>
 
       <p className="text-lg md:text-xl text-white/50 max-w-2xl mb-10 leading-relaxed">
-        Gestiona tus datos con tecnología de encriptación avanzada, 
-        auditoría en tiempo real y cumplimiento de estándares OWASP. 
-        Seguridad industrial para tu ecosistema digital.
+        Plataforma de autenticación con registro de actividad, 
+        protección avanzada y consumo de APIs externas.
       </p>
 
       {/* CTA Buttons */}
@@ -28,23 +27,23 @@ export default function LandingPage() {
           href="/login"
           className="px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-white font-bold rounded-2xl transition-all duration-300 shadow-lg shadow-cyan-500/20 hover:scale-105"
         >
-          Acceder ahora
+          Iniciar Sesión
         </Link>
         <Link 
           href="/register"
           className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-bold rounded-2xl border border-white/10 transition-all duration-300 backdrop-blur-md"
         >
-          Crear cuenta segura
+          Crear cuenta
         </Link>
       </div>
 
       {/* Feature Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full text-left">
         {[
-          { icon: <LockIcon className="text-cyan-400" />, title: 'Encriptación Hex', desc: 'Contraseñas de grado hexadecimal.' },
-          { icon: <ShieldCheckIcon className="text-emerald-400" />, title: 'Cumple OWASP', desc: 'Protección contra Inyección y XSS.' },
-          { icon: <ActivityIcon className="text-amber-400" />, title: 'Auditoría Viva', desc: 'Logs de cada acción con IP y UA.' },
-          { icon: <ZapIcon className="text-purple-400" />, title: 'Server Actions', desc: 'Lógica procesada 100% en el servidor.' },
+          { icon: <LockIcon className="text-cyan-400" />, title: 'Autenticación Segura', desc: 'Login con protección y validación.' },
+          { icon: <ShieldCheckIcon className="text-emerald-400" />, title: 'Protección OWASP', desc: 'Contra inyección SQL y XSS.' },
+          { icon: <ActivityIcon className="text-amber-400" />, title: 'Auditoría', desc: 'Registro de cada acción del usuario.' },
+          { icon: <ZapIcon className="text-purple-400" />, title: 'API Externa', desc: 'Consumo de servicios externos.' },
         ].map((f, i) => (
           <div key={i} className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:border-white/20 transition-all duration-300 group">
             <div className="mb-4 group-hover:scale-110 transition-transform duration-300">{f.icon}</div>

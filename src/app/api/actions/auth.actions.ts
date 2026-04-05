@@ -16,12 +16,13 @@ import {
   type RegisterInput,
   type LoginInput,
 } from '@/lib/validations';
+import { ZodError } from 'zod';
 import { cookies, headers } from 'next/headers';
 import { rateLimitLogin, rateLimitRegister } from '@/lib/security/rate-limit';
 import type { ApiResponse } from '@/types';
 
-function getClientInfo() {
-  const h = headers();
+async function getClientInfo() {
+  const h = await headers();
   return {
     ip: h.get('x-forwarded-for') || 'unknown',
     ua: h.get('user-agent') || '',
@@ -33,7 +34,7 @@ async function logAction(
   actionType: string,
   details?: string
 ) {
-  const { ip, ua } = getClientInfo();
+  const { ip, ua } = await getClientInfo();
   await db.insert(action_logs).values({
     user_id: userId,
     action_type: actionType,
@@ -47,7 +48,7 @@ export async function registerAction(
   input: RegisterInput
 ): Promise<ApiResponse<{ userId: number }>> {
   try {
-    const { ip } = getClientInfo();
+    const { ip } = await getClientInfo();
     const rl = rateLimitRegister(ip);
     if (!rl.allowed) {
       return { success: false, error: 'Demasiados intentos, espera un momento' };
@@ -91,8 +92,12 @@ export async function registerAction(
 
     return { success: true, data: { userId: newUser.id } };
   } catch (error: unknown) {
-    const msg = error instanceof Error ? error.message : 'Error en registro';
-    return { success: false, error: msg };
+    if (error instanceof ZodError) {
+      const firstMsg = error.issues[0]?.message || 'Los datos ingresados no son válidos';
+      return { success: false, error: firstMsg };
+    }
+    console.error('Error en registro:', error);
+    return { success: false, error: 'No se pudo crear la cuenta. Verifica que el servidor esté funcionando e intenta de nuevo.' };
   }
 }
 
@@ -100,7 +105,7 @@ export async function loginAction(
   input: LoginInput
 ): Promise<ApiResponse<{ token: string }>> {
   try {
-    const { ip } = getClientInfo();
+    const { ip } = await getClientInfo();
     const rl = rateLimitLogin(ip);
     if (!rl.allowed) {
       return { success: false, error: 'Demasiados intentos, espera 15 minutos' };
@@ -151,8 +156,12 @@ export async function loginAction(
 
     return { success: true, data: { token } };
   } catch (error: unknown) {
-    const msg = error instanceof Error ? error.message : 'Error en login';
-    return { success: false, error: msg };
+    if (error instanceof ZodError) {
+      const firstMsg = error.issues[0]?.message || 'Los datos ingresados no son válidos';
+      return { success: false, error: firstMsg };
+    }
+    console.error('Error en login:', error);
+    return { success: false, error: 'No se pudo iniciar sesión. Verifica que el servidor esté funcionando e intenta de nuevo.' };
   }
 }
 
