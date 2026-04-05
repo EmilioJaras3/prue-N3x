@@ -83,3 +83,31 @@ export const logsRelations = relations(action_logs, ({ one }) => ({
     references: [users.id],
   }),
 }));
+
+export const pokemon_collection = pgTable(
+  'pokemon_collection',
+  {
+    id: serial('id').primaryKey(),
+    user_id: integer('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    pokemon_id: integer('pokemon_id').notNull(),
+    name: varchar('name', { length: 100 }).notNull(),
+    type: varchar('type', { length: 100 }),
+    image_url: text('image_url').notNull(),
+    weight: integer('weight'),
+    height: integer('height'),
+    stats_json: text('stats_json'), // Store {hp, attack, defense} as JSON string
+    captured_at: timestamp('captured_at').defaultNow(),
+  },
+  (table) => ({
+    userIdx: index('pokemon_user_idx').on(table.user_id),
+  })
+);
+
+export const pokemonRelations = relations(pokemon_collection, ({ one }) => ({
+  user: one(users, {
+    fields: [pokemon_collection.user_id],
+    references: [users.id],
+  }),
+}));

@@ -27,99 +27,104 @@ export default function PokedexWidget() {
   }, []);
 
   return (
-    <div className="bg-white/5 backdrop-blur-md border border-purple-500/30 rounded-2xl p-6 relative overflow-hidden group">
+    <div className="bg-black/60 backdrop-blur-3xl border border-red-500/20 rounded-2xl p-6 relative overflow-hidden group shadow-[inset_0_0_50px_rgba(255,0,0,0.05)]">
       {/* Efectos de fondo dark/hacker */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/20 rounded-full blur-[50px] -z-10 group-hover:bg-purple-500/30 transition-all duration-500" />
+      <div className="absolute top-0 right-0 w-32 h-32 bg-red-600/20 rounded-full blur-[50px] -z-10 group-hover:bg-red-500/30 transition-all duration-500" />
       <div className="absolute bottom-0 left-0 w-24 h-24 bg-cyan-500/10 rounded-full blur-[40px] -z-10" />
 
-      <div className="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
-        <h3 className="text-lg font-space font-bold flex items-center gap-2 text-purple-300 shadow-purple-500/50">
-          <ScanIcon className="text-purple-400" size={20} />
-          <span>VAULT SPECIMEN DATABASE</span>
+      <div className="flex justify-between items-center mb-6 border-b border-red-500/20 pb-4">
+        <h3 className="text-lg font-space font-bold flex items-center gap-2 text-white tracking-widest uppercase">
+          <ScanIcon className="text-red-500" size={20} />
+          <span>Archivo Escáner</span>
         </h3>
         <button 
           onClick={loadPokemon}
           disabled={loading}
-          className="text-xs bg-purple-500/20 hover:bg-purple-500/40 text-purple-200 px-3 py-1.5 rounded-lg transition-all border border-purple-500/30 disabled:opacity-50 flex items-center gap-2"
+          className="text-xs bg-red-500/10 hover:bg-red-500/30 text-white px-4 py-2 rounded-lg transition-all border border-red-500/30 disabled:opacity-50 flex items-center gap-2 font-mono uppercase tracking-widest shadow-[0_0_15px_rgba(255,0,0,0.2)]"
         >
           {loading ? (
-            <span className="w-3 h-3 border-2 border-purple-400 border-t-transparent rounded-full animate-spin"></span>
+            <span className="w-4 h-4 border-2 border-red-400 border-t-transparent rounded-full animate-spin"></span>
           ) : (
-            <ActivityIcon size={14} />
+            <ActivityIcon size={14} className="text-red-400" />
           )}
-          {loading ? 'DECODING...' : 'SCAN NEW'}
+          {loading ? 'DEDIFICANDO...' : 'ESCANEAR'}
         </button>
       </div>
 
       {error ? (
-        <div className="flex items-center gap-2 text-red-400 p-4 bg-red-400/10 rounded-xl border border-red-400/20">
-          <ShieldAlertIcon size={20} />
-          <p>{error}</p>
+        <div className="flex flex-col items-center justify-center gap-4 py-8 text-center animate-fade-in group">
+          <div className="w-16 h-16 bg-red-900/40 border border-red-500/50 rounded-2xl flex items-center justify-center backdrop-blur-md shadow-[0_0_30px_rgba(255,0,0,0.3)] group-hover:scale-105 transition-transform">
+            <ShieldAlertIcon size={32} className="text-red-400 animate-pulse" />
+          </div>
+          <div className="space-y-1">
+            <h4 className="text-red-400 font-bold font-space uppercase tracking-widest">⚠️ ERROR CRÍTICO</h4>
+            <p className="text-red-200/70 text-sm font-mono max-w-sm">Conexión con PokéAPI perdida. Reintentando señal al servidor de Bill...</p>
+            <p className="text-red-500/50 text-[10px] uppercase tracking-widest mt-2 block">[ ERROR TYPE: NETWORK_UNREACHABLE ]</p>
+          </div>
         </div>
       ) : loading && !pokemon ? (
         <div className="h-48 flex items-center justify-center">
           <div className="flex flex-col items-center gap-3">
-            <ScanIcon className="text-purple-400 animate-pulse" size={32} />
-            <p className="text-purple-400/70 text-sm font-space animate-pulse">Decrypting biometric data...</p>
+            <ScanIcon className="text-cyan-400 animate-[spin_3s_linear_infinite]" size={40} />
+            <p className="text-cyan-400/70 text-xs font-mono uppercase tracking-widest animate-pulse">Sensores inactivos. Esperando escaneo...</p>
           </div>
         </div>
       ) : pokemon ? (
         <div className="flex flex-col md:flex-row gap-6">
-          <div className="relative w-32 h-32 mx-auto md:mx-0 bg-gradient-to-b from-purple-500/20 to-transparent rounded-xl border border-purple-500/20 flex items-center justify-center p-2 group-hover:border-purple-500/50 transition-colors">
+          <div className="relative w-32 h-32 mx-auto md:mx-0 bg-gradient-to-b from-red-500/20 to-black/80 rounded-xl border border-red-500/30 flex items-center justify-center p-2 group-hover:shadow-[0_0_30px_rgba(255,0,0,0.3)] transition-all">
             <img 
               src={pokemon.image} 
               alt={pokemon.name} 
-              className="w-full h-full object-contain filter drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]"
+              className="w-full h-full object-contain filter drop-shadow-[0_0_20px_rgba(255,0,0,0.5)]"
             />
-            <div className="absolute top-2 left-2 text-[10px] text-purple-300/50 font-mono">
-              ID:{String(pokemon.id).padStart(3, '0')}
+            <div className="absolute top-2 left-2 text-[10px] text-red-300 font-mono tracking-widest font-bold">
+              ID::{String(pokemon.id).padStart(3, '0')}
+            </div>
+            <div className="absolute bottom-2 right-2 text-[8px] text-cyan-400 font-mono uppercase tracking-widest bg-cyan-900/30 px-1 border border-cyan-500/30">
+              SCAN OK
             </div>
           </div>
           
           <div className="flex-1 space-y-4">
             <div>
-              <h4 className="text-2xl font-bold font-manrope text-white capitalize tracking-wide">
+              <h4 className="text-3xl font-bold font-space text-white uppercase tracking-wider flex items-center gap-3">
                 {pokemon.name}
+                <div className="h-0.5 flex-1 bg-gradient-to-r from-red-500/50 to-transparent"></div>
               </h4>
               <div className="flex gap-2 mt-2">
-                <span className="text-[10px] font-bold uppercase bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded border border-purple-500/30">
-                  CLASS: {pokemon.type}
+                <span className="text-[10px] font-bold uppercase bg-red-500/20 text-red-200 px-3 py-1 rounded-sm border border-red-500/50 tracking-widest shadow-[0_0_10px_rgba(255,0,0,0.2)]">
+                  TYPE: {pokemon.type}
                 </span>
-                <span className="text-[10px] font-bold bg-white/5 text-neutral-400 px-2 py-0.5 rounded border border-white/10">
+                <span className="text-[10px] font-bold uppercase bg-white/5 text-neutral-300 px-3 py-1 rounded-sm border border-white/20 tracking-widest">
                   WT: {pokemon.weight / 10}kg
                 </span>
-                <span className="text-[10px] font-bold bg-white/5 text-neutral-400 px-2 py-0.5 rounded border border-white/10">
+                <span className="text-[10px] font-bold uppercase bg-white/5 text-neutral-300 px-3 py-1 rounded-sm border border-white/20 tracking-widest">
                   HT: {pokemon.height / 10}m
                 </span>
               </div>
             </div>
 
-            <div className="space-y-2">
-              <div className="text-xs text-neutral-400 font-space mb-1">BIOMETRIC STATS</div>
+            <div className="space-y-3 bg-black/40 p-4 rounded-xl border border-white/5">
+              <div className="text-xs text-cyan-400 font-mono mb-2 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse blur-[1px]"></span>
+                MATRIZ DE STATS BASE
+              </div>
               
-              <div className="flex items-center gap-3">
-                <div className="w-12 text-[10px] font-bold text-red-400">HP</div>
-                <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
-                  <div className="h-full bg-red-500 rounded-full" style={{ width: `${Math.min(100, (pokemon.stats.hp / 200) * 100)}%` }} />
+              {[
+                { label: 'HP', val: pokemon.stats.hp, max: 200, color: 'bg-red-500', text: 'text-red-400' },
+                { label: 'ATK', val: pokemon.stats.attack, max: 200, color: 'bg-orange-500', text: 'text-orange-400' },
+                { label: 'DEF', val: pokemon.stats.defense, max: 200, color: 'bg-blue-500', text: 'text-blue-400' },
+              ].map((stat, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <div className={`w-10 text-[10px] font-bold font-space tracking-widest ${stat.text}`}>{stat.label}</div>
+                  <div className="flex-1 h-3 bg-black/80 rounded-sm border border-white/10 overflow-hidden relative">
+                    {/* Tick marks pattern for radar look */}
+                    <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjEwIj48cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIxMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjEpIi8+PC9zdmc+')] opacity-50 z-10" />
+                    <div className={`h-full ${stat.color} shadow-[0_0_10px_currentColor] relative z-0`} style={{ width: `${Math.min(100, (stat.val / stat.max) * 100)}%` }} />
+                  </div>
+                  <div className="w-8 text-[10px] text-right font-mono text-white font-bold">{stat.val}</div>
                 </div>
-                <div className="w-6 text-[10px] text-right font-mono text-white/70">{pokemon.stats.hp}</div>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <div className="w-12 text-[10px] font-bold text-orange-400">ATK</div>
-                <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
-                  <div className="h-full bg-orange-500 rounded-full" style={{ width: `${Math.min(100, (pokemon.stats.attack / 200) * 100)}%` }} />
-                </div>
-                <div className="w-6 text-[10px] text-right font-mono text-white/70">{pokemon.stats.attack}</div>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <div className="w-12 text-[10px] font-bold text-blue-400">DEF</div>
-                <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
-                  <div className="h-full bg-blue-500 rounded-full" style={{ width: `${Math.min(100, (pokemon.stats.defense / 200) * 100)}%` }} />
-                </div>
-                <div className="w-6 text-[10px] text-right font-mono text-white/70">{pokemon.stats.defense}</div>
-              </div>
+              ))}
             </div>
           </div>
         </div>

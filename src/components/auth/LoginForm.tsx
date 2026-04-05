@@ -33,46 +33,55 @@ export default function LoginForm() {
 
   return (
     <div className="w-full max-w-md mx-auto animate-fade-in">
-      <div className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden group">
-        <div className="absolute -top-10 -right-10 w-24 h-24 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition-all duration-700" />
+      <div className="bg-black/40 backdrop-blur-3xl border border-red-500/20 rounded-3xl p-8 shadow-[0_0_80px_rgba(255,0,0,0.15)] relative overflow-hidden group">
+        <div className="absolute -top-10 -right-10 w-32 h-32 bg-red-600/20 rounded-full blur-3xl group-hover:bg-red-500/30 transition-all duration-700" />
+        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-red-900/40 rounded-full blur-3xl transition-all duration-700" />
         
         <div className="relative z-10">
-          <div className="w-12 h-12 bg-cyan-500/20 rounded-2xl flex items-center justify-center mb-6 border border-cyan-500/30">
-            <LockIcon className="text-cyan-400" size={24} />
+          <div className="w-14 h-14 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6 border border-red-500/30 shadow-[0_0_15px_rgba(255,0,0,0.2)]">
+            <LockIcon className="text-red-500" size={28} />
           </div>
           
-          <h2 className="text-3xl font-bold text-white mb-2 font-manrope tracking-tight">Acceso Seguro</h2>
-          <p className="text-white/50 text-sm mb-8">
-            Ingresa tus credenciales para continuar.
+          <h2 className="text-3xl font-bold text-white mb-2 font-space tracking-tight">Portal de Entrenador</h2>
+          <p className="text-white/60 text-sm mb-6 font-manrope">
+            Ingresa tu ID Universal y Clave Secreta para enlazar tu Pokédex.
           </p>
 
+          <div className="bg-orange-900/40 border border-orange-500/30 text-orange-200 text-xs px-4 py-3 rounded-xl mb-6 flex gap-3 font-mono leading-relaxed shadow-[0_0_10px_rgba(249,115,22,0.1)]">
+            <span className="text-lg">⚠️</span> 
+            <div>
+              <strong className="block text-orange-400 mb-0.5 tracking-widest">AVISO DE MANTENIMIENTO</strong>
+              Algunos apartados del sistema se encuentran inactivos (PC de Bill). Si a&uacute;n no puedes iniciar sesi&oacute;n o crear cuenta, intenta m&aacute;s tarde.
+            </div>
+          </div>
+
           {error && (
-            <div className="bg-red-500/20 border border-red-400/30 text-red-200 text-sm px-4 py-3 rounded-xl mb-6 animate-shake">
-              {error}
+            <div className="bg-red-900/40 border border-red-500/50 text-red-100 text-sm px-4 py-3 rounded-xl mb-6 flex items-center gap-3 animate-shake backdrop-blur-md shadow-[0_0_10px_rgba(255,0,0,0.3)]">
+              <span className="text-xl">⚠️</span> {error}
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
-              <label className="block text-white/70 text-sm font-medium ml-1">Correo electrónico</label>
+              <label className="block text-red-200/70 text-xs font-bold tracking-widest uppercase ml-1">ID Universal (Correo)</label>
               <div className="relative">
-                <MailIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" size={18} />
+                <MailIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-red-500/50" size={18} />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="tu@correo.com"
+                  placeholder="entrenador@kanto.com"
                   required
                   disabled={loading}
-                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-500/40 focus:border-cyan-500/40 transition-all disabled:opacity-50"
+                  className="w-full pl-10 pr-4 py-3.5 bg-black/50 border border-white/10 rounded-xl text-white placeholder-white/20 focus:outline-none focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 transition-all disabled:opacity-50 font-mono text-sm"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="block text-white/70 text-sm font-medium ml-1">Contraseña</label>
+              <label className="block text-red-200/70 text-xs font-bold tracking-widest uppercase ml-1">Clave Secreta</label>
               <div className="relative">
-                <LockIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" size={18} />
+                <LockIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-red-500/50" size={18} />
                 <input
                   type="password"
                   value={password}
@@ -82,10 +91,10 @@ export default function LoginForm() {
                       setPassword(val);
                     }
                   }}
-                  placeholder="Mínimo 6 caracteres"
+                  placeholder="Autorización nivel 6 requerida"
                   required
                   disabled={loading}
-                  className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-500/40 focus:border-cyan-500/40 transition-all disabled:opacity-50"
+                  className="w-full pl-10 pr-4 py-3.5 bg-black/50 border border-white/10 rounded-xl text-white placeholder-white/20 focus:outline-none focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 transition-all disabled:opacity-50 font-mono text-sm tracking-widest"
                 />
               </div>
             </div>
@@ -93,24 +102,24 @@ export default function LoginForm() {
             <button
               type="submit"
               disabled={loading || password.length < 6}
-              className="w-full py-3.5 bg-cyan-500 hover:bg-cyan-400 disabled:bg-neutral-800 text-white font-bold rounded-xl transition-all duration-300 shadow-lg shadow-cyan-500/20 active:scale-[0.98] flex items-center justify-center gap-2"
+              className="w-full py-4 mt-2 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 disabled:from-neutral-800 disabled:to-neutral-900 text-white font-bold tracking-widest uppercase rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,0,0,0.3)] hover:shadow-[0_0_30px_rgba(255,0,0,0.5)] active:scale-[0.98] flex items-center justify-center gap-2 border border-red-400/30 font-space"
             >
               {loading ? (
                 <>
-                  <Loader2Icon className="animate-spin" size={20} />
-                  <span>Verificando...</span>
+                  <Loader2Icon className="animate-spin text-white" size={20} />
+                  <span>Estableciendo conexión...</span>
                 </>
               ) : (
-                'Iniciar Sesión'
+                'Vincular Pokédex'
               )}
             </button>
           </form>
 
-          <div className="mt-8 pt-6 border-t border-white/5 text-center">
-            <p className="text-white/40 text-sm">
-              ¿No tienes cuenta?{' '}
-              <a href="/register" className="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors">
-                Crear cuenta
+          <div className="mt-8 pt-6 border-t border-red-500/10 text-center">
+            <p className="text-white/40 text-sm font-manrope">
+              ¿No tienes ID de Entrenador?{' '}
+              <a href="/register" className="text-red-400 hover:text-red-300 font-bold transition-colors">
+                Registrar Investigador
               </a>
             </p>
           </div>

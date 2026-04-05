@@ -11,10 +11,6 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  if (token && ['/login', '/register'].includes(pathname)) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
-  }
-
   const response = NextResponse.next();
   const headers = getSecurityHeaders();
   Object.entries(headers).forEach(([key, value]) => {
