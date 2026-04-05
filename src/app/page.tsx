@@ -3,7 +3,6 @@ import Link from 'next/link';
 export default function LandingPage() {
   return (
     <div className="w-full max-w-5xl mx-auto flex flex-col items-center text-center px-4 py-10">
-      {/* Pokéball floating icon */}
       <div className="mb-8 animate-fade-in relative">
         <div className="w-20 h-20 rounded-full border-4 border-red-500/50 flex items-center justify-center bg-black/60 backdrop-blur-xl shadow-[0_0_40px_rgba(255,0,0,0.3)] relative overflow-hidden group">
           <div className="absolute top-0 left-0 w-full h-1/2 bg-red-500/20" />
@@ -14,7 +13,6 @@ export default function LandingPage() {
         <div className="absolute -inset-4 bg-red-500/10 rounded-full blur-2xl -z-10 animate-pulse" />
       </div>
 
-      {/* Main Title */}
       <h1 className="text-5xl md:text-7xl font-bold font-space mb-6 leading-tight tracking-tighter">
         <span className="bg-gradient-to-b from-white via-white to-white/30 bg-clip-text text-transparent">Caja</span>
         <br />
@@ -23,10 +21,9 @@ export default function LandingPage() {
 
       <p className="text-base md:text-lg text-white/60 max-w-xl mb-12 leading-relaxed font-manrope">
         ¡Guarda todos los Pokémon que atrapes en tu propia caja digital!
-        Busca, escanea y colecciona especies de todas las regiones. 🌍
+        Busca, escanea y colecciona especies de todas las regiones.
       </p>
 
-      {/* CTA Buttons */}
       <div className="flex flex-col sm:flex-row gap-4 mb-20">
         <Link 
           href="/login"
@@ -42,24 +39,21 @@ export default function LandingPage() {
         </Link>
       </div>
 
-      {/* Pokémon Types */}
       <div className="grid grid-cols-3 md:grid-cols-6 gap-3 w-full">
         {[
-          { emoji: '🔥', type: 'Fuego', color: 'from-orange-600/30 to-red-600/30', border: 'border-orange-500/30' },
-          { emoji: '💧', type: 'Agua', color: 'from-blue-600/30 to-cyan-600/30', border: 'border-blue-500/30' },
-          { emoji: '⚡', type: 'Eléctrico', color: 'from-yellow-600/30 to-amber-600/30', border: 'border-yellow-500/30' },
-          { emoji: '🌿', type: 'Planta', color: 'from-green-600/30 to-emerald-600/30', border: 'border-green-500/30' },
-          { emoji: '🔮', type: 'Psíquico', color: 'from-purple-600/30 to-pink-600/30', border: 'border-purple-500/30' },
-          { emoji: '🐉', type: 'Dragón', color: 'from-indigo-600/30 to-violet-600/30', border: 'border-indigo-500/30' },
+          { type: 'Fuego', color: 'from-orange-600/30 to-red-600/30', border: 'border-orange-500/30' },
+          { type: 'Agua', color: 'from-blue-600/30 to-cyan-600/30', border: 'border-blue-500/30' },
+          { type: 'Eléctrico', color: 'from-yellow-600/30 to-amber-600/30', border: 'border-yellow-500/30' },
+          { type: 'Planta', color: 'from-green-600/30 to-emerald-600/30', border: 'border-green-500/30' },
+          { type: 'Psíquico', color: 'from-purple-600/30 to-pink-600/30', border: 'border-purple-500/30' },
+          { type: 'Dragón', color: 'from-indigo-600/30 to-violet-600/30', border: 'border-indigo-500/30' },
         ].map((t, i) => (
-          <div key={i} className={`p-4 rounded-xl bg-gradient-to-b ${t.color} border ${t.border} backdrop-blur-xl transition-all duration-300 group text-center flex flex-col items-center gap-2 hover:scale-105 cursor-default`}>
-            <span className="text-2xl group-hover:scale-125 transition-transform">{t.emoji}</span>
+          <div key={i} className={`p-4 rounded-xl bg-gradient-to-b ${t.color} border ${t.border} backdrop-blur-xl transition-all duration-300 group text-center flex flex-col items-center justify-center gap-2 hover:scale-105 cursor-default h-24`}>
             <h3 className="font-bold text-white text-[10px] font-space tracking-wider uppercase">{t.type}</h3>
           </div>
         ))}
       </div>
 
-      {/* Footer */}
       <div className="mt-20 opacity-20 flex items-center gap-6">
         <div className="h-[1px] w-32 bg-gradient-to-r from-transparent to-red-500" />
         <div className="w-3 h-3 rounded-full border border-red-500/50" />

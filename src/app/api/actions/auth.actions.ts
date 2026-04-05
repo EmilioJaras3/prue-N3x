@@ -96,7 +96,6 @@ export async function registerAction(
       const firstMsg = error.issues[0]?.message || 'Los datos ingresados no son válidos';
       return { success: false, error: firstMsg };
     }
-    console.error('Error en registro:', error);
     return { success: false, error: 'No se pudo crear la cuenta. Verifica que el servidor esté funcionando e intenta de nuevo.' };
   }
 }
@@ -160,7 +159,6 @@ export async function loginAction(
       const firstMsg = error.issues[0]?.message || 'Los datos ingresados no son válidos';
       return { success: false, error: firstMsg };
     }
-    console.error('Error en login:', error);
     return { success: false, error: 'No se pudo iniciar sesión. Verifica que el servidor esté funcionando e intenta de nuevo.' };
   }
 }

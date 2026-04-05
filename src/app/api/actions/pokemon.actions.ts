@@ -16,12 +16,10 @@ export interface PokemonData {
 
 export async function fetchRandomPokemon(): Promise<{ success: boolean; data?: PokemonData; error?: string }> {
   try {
-    // Generar un ID aleatorio entre 1 y 151 (Kanto)
     const randomId = Math.floor(Math.random() * 151) + 1;
     
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`, {
-      // Force cache o revalidate para optimizar en Next.js
-      next: { revalidate: 0 } // Desactivamos caché para que siempre sea random
+      next: { revalidate: 0 }
     });
 
     if (!res.ok) {
@@ -46,12 +44,10 @@ export async function fetchRandomPokemon(): Promise<{ success: boolean; data?: P
 
     return { success: true, data: pokemon };
   } catch (error) {
-    console.error('PokeAPI Error:', error);
     return { success: false, error: 'No se pudo desencriptar la información del espécimen.' };
   }
 }
 
-// Implementación de distancia de Levenshtein
 function levenshteinDistance(s1: string, s2: string): number {
   if (s1.length === 0) return s2.length;
   if (s2.length === 0) return s1.length;
@@ -82,7 +78,6 @@ export async function searchPokemonByName(name: string): Promise<{ success: bool
       return { success: false, error: 'Ingresa un nombre válido.' };
     }
 
-    // Cargar la lista si no está en memoria
     if (!cachedPokemonList) {
       try {
         const listRes = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000', { next: { revalidate: 3600 } });
@@ -90,12 +85,9 @@ export async function searchPokemonByName(name: string): Promise<{ success: bool
           const listData = await listRes.json();
           cachedPokemonList = listData.results.map((p: any) => p.name);
         }
-      } catch (e) {
-        // Fallará silenciosamente y continuará
-      }
+      } catch (e) {}
     }
 
-    // Si tenemos la lista, intentamos encontrar el más parecido
     if (cachedPokemonList) {
       let bestMatch = cleanName;
       let minDistance = Infinity;
@@ -106,10 +98,9 @@ export async function searchPokemonByName(name: string): Promise<{ success: bool
           minDistance = 0;
           break;
         }
-        // Verificamos substrings directos o calculamos distancia
         if (pName.includes(cleanName) && pName.length - cleanName.length <= 2) {
           bestMatch = pName;
-          minDistance = 1; // Priorizar substrings si son parecidos
+          minDistance = 1;
         } else {
           const dist = levenshteinDistance(cleanName, pName);
           if (dist < minDistance) {
@@ -119,7 +110,6 @@ export async function searchPokemonByName(name: string): Promise<{ success: bool
         }
       }
 
-      // Si la diferencia es de 1 a 3 caracteres, lo aceptamos
       if (minDistance > 0 && minDistance <= 3 && Math.abs(cleanName.length - bestMatch.length) <= 2) {
          cleanName = bestMatch;
       }
@@ -151,7 +141,6 @@ export async function searchPokemonByName(name: string): Promise<{ success: bool
 
     return { success: true, data: pokemon };
   } catch (error) {
-    console.error('PokeAPI Search Error:', error);
     return { success: false, error: 'Error de conexión con PokéAPI.' };
   }
 }
@@ -171,7 +160,6 @@ export async function savePokemonToBox(pokemon: PokemonData): Promise<{ success:
 
     const userId = userResult.data.id;
 
-    // Verificar límite o si ya lo tiene (opcional, por ahora lo dejamos guardar repetidos)
     await db.insert(pokemon_collection).values({
       user_id: userId,
       pokemon_id: pokemon.id,
@@ -183,7 +171,6 @@ export async function savePokemonToBox(pokemon: PokemonData): Promise<{ success:
       stats_json: JSON.stringify(pokemon.stats),
     });
 
-    // Registrar en auditoría
     const reqHeaders = await headers();
     const forwardedFor = reqHeaders.get('x-forwarded-for');
     const ip = forwardedFor ? forwardedFor.split(',')[0].trim() : '127.0.0.1';
@@ -198,7 +185,6 @@ export async function savePokemonToBox(pokemon: PokemonData): Promise<{ success:
 
     return { success: true };
   } catch (error) {
-    console.error('Error saving Pokemon:', error);
     return { success: false, error: 'Error de base de datos' };
   }
 }
@@ -218,7 +204,6 @@ export async function getBoxPokemon(): Promise<{ success: boolean; data?: any[];
 
     return { success: true, data: caught };
   } catch (error) {
-    console.error('Error getting Box:', error);
     return { success: false, error: 'No se pudo cargar la Caja PC' };
   }
 }

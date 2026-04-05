@@ -57,7 +57,7 @@ export default function PokedexWidget() {
             <ShieldAlertIcon size={32} className="text-red-400 animate-pulse" />
           </div>
           <div className="space-y-1">
-            <h4 className="text-red-400 font-bold font-space uppercase tracking-widest">⚠️ ERROR CRÍTICO</h4>
+            <h4 className="text-red-400 font-bold font-space uppercase tracking-widest">ERROR CRITICO</h4>
             <p className="text-red-200/70 text-sm font-mono max-w-sm">Conexión con PokéAPI perdida. Reintentando señal al servidor de Bill...</p>
             <p className="text-red-500/50 text-[10px] uppercase tracking-widest mt-2 block">[ ERROR TYPE: NETWORK_UNREACHABLE ]</p>
           </div>
@@ -87,8 +87,8 @@ export default function PokedexWidget() {
           
           <div className="flex-1 space-y-4">
             <div>
-              <h4 className="text-3xl font-bold font-space text-white uppercase tracking-wider flex items-center gap-3">
-                {pokemon.name}
+              <h4 className="text-2xl lg:text-3xl font-bold font-space text-white uppercase tracking-wider flex items-center gap-3 max-w-full truncate">
+                <span className="truncate" title={pokemon.name}>{pokemon.name}</span>
                 <div className="h-0.5 flex-1 bg-gradient-to-r from-red-500/50 to-transparent"></div>
               </h4>
               <div className="flex gap-2 mt-2">
@@ -118,7 +118,6 @@ export default function PokedexWidget() {
                 <div key={i} className="flex items-center gap-3">
                   <div className={`w-10 text-[10px] font-bold font-space tracking-widest ${stat.text}`}>{stat.label}</div>
                   <div className="flex-1 h-3 bg-black/80 rounded-sm border border-white/10 overflow-hidden relative">
-                    {/* Tick marks pattern for radar look */}
                     <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjEwIj48cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIxMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjEpIi8+PC9zdmc+')] opacity-50 z-10" />
                     <div className={`h-full ${stat.color} shadow-[0_0_10px_currentColor] relative z-0`} style={{ width: `${Math.min(100, (stat.val / stat.max) * 100)}%` }} />
                   </div>

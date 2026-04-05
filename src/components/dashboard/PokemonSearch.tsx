@@ -79,17 +79,15 @@ export default function PokemonSearch() {
         </button>
       </form>
 
-      {/* Error */}
       {error && (
         <div className="bg-red-900/30 border border-red-500/30 text-red-200 text-sm px-4 py-3 rounded-xl flex items-center gap-2 font-mono">
-          <span>⚠️</span> {error}
+          {error}
         </div>
       )}
 
-      {/* Message */}
       {successMsg && (
         <div className="bg-emerald-900/30 border border-emerald-500/30 text-emerald-200 text-sm px-4 py-3 rounded-xl flex items-center gap-2 font-mono">
-          <span>✅</span> {successMsg}
+          {successMsg}
         </div>
       )}
 

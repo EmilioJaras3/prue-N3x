@@ -59,7 +59,7 @@ export default function PCBox() {
               className="relative aspect-square bg-gradient-to-b from-white/10 to-transparent rounded-xl border border-white/10 hover:border-red-500/50 hover:from-red-500/20 transition-all flex items-center justify-center group overflow-hidden"
             >
               <img src={p.image_url} alt={p.name} className="w-16 h-16 object-contain filter drop-shadow-[0_0_10px_rgba(255,0,0,0.3)] group-hover:scale-110 transition-transform" />
-              <div className="absolute bottom-0 left-0 right-0 bg-black/80 py-1 px-2 border-t border-white/10 text-[9px] font-mono font-bold uppercase tracking-widest text-center truncate">
+              <div className="absolute bottom-0 left-0 right-0 bg-black/80 py-1 px-1 border-t border-white/10 text-[8px] sm:text-[9px] font-mono font-bold uppercase tracking-wider text-center truncate">
                 {p.name}
               </div>
             </button>
@@ -67,16 +67,16 @@ export default function PCBox() {
         </div>
       )}
 
-      {/* Modal de Stats */}
       {selected && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in"
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm animate-fade-in overflow-y-auto"
           onClick={() => setSelected(null)}
         >
-          <div 
-            className="bg-[#0f0f0f] border-2 border-red-500/50 rounded-2xl p-6 w-full max-w-sm relative shadow-[0_0_50px_rgba(255,0,0,0.3)] animate-scale-in"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="min-h-full flex items-center justify-center p-4 py-8">
+            <div 
+              className="bg-[#0f0f0f] border-2 border-red-500/50 rounded-2xl p-6 w-full max-w-sm relative shadow-[0_0_50px_rgba(255,0,0,0.3)] animate-scale-in my-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
             <button
               onClick={() => setSelected(null)}
               className="absolute top-4 right-4 text-white/40 hover:text-white bg-white/5 hover:bg-red-500/20 p-2 rounded-full transition-all"
@@ -88,7 +88,7 @@ export default function PCBox() {
               <div className="w-32 h-32 bg-gradient-to-b from-red-500/20 to-black rounded-full border border-red-500/30 flex items-center justify-center mb-4 relative drop-shadow-[0_0_30px_rgba(255,0,0,0.2)]">
                 <img src={selected.image_url} alt={selected.name} className="w-24 h-24 object-contain" />
               </div>
-              <h2 className="text-2xl font-space font-bold uppercase tracking-widest text-white mb-1">
+              <h2 className="text-xl sm:text-2xl font-space font-bold uppercase tracking-widest text-white mb-1 text-center w-full break-words px-2 leading-tight">
                 {selected.name}
               </h2>
               <span className="text-[10px] bg-red-500/20 text-red-300 font-bold px-3 py-1 rounded-sm border border-red-500/30 uppercase tracking-widest">
@@ -141,6 +141,7 @@ export default function PCBox() {
             >
               Volver a la Caja
             </button>
+          </div>
           </div>
         </div>
       )}

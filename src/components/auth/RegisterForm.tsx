@@ -83,7 +83,6 @@ export default function RegisterForm() {
 
           {apiDown && (
             <div className="bg-orange-900/40 border border-orange-500/30 text-orange-200 text-xs px-4 py-3 rounded-xl mb-6 flex gap-3 font-mono leading-relaxed shadow-[0_0_10px_rgba(249,115,22,0.1)]">
-              <span className="text-lg">⚠️</span> 
               <div>
                 <strong className="block text-orange-400 mb-0.5 tracking-widest">AVISO DE MANTENIMIENTO</strong>
                 La Pokédex Mundial (PokéAPI) no responde. Ciertas funciones como el escáner estarán inhabilitadas al entrar al sistema.
@@ -93,7 +92,7 @@ export default function RegisterForm() {
 
           {error && (
             <div className="bg-red-900/40 border border-red-500/50 text-red-100 text-sm px-4 py-3 rounded-xl mb-6 flex items-center gap-3 animate-shake backdrop-blur-md shadow-[0_0_10px_rgba(255,0,0,0.3)]">
-              <span className="text-xl">⚠️</span> {error}
+              {error}
             </div>
           )}
 

@@ -1,113 +1,93 @@
-# Panel Seguro
+# Consola de Investigación Pokémon (Obsidian Dex)
 
-Aplicacion web de autenticacion y gestion de usuarios con arquitectura SOA.
+Este proyecto es una plataforma de gestión e investigación Pokémon desarrollada como prueba técnica, enfocada en altos estándares de ingeniería, seguridad y experiencia de usuario (UX).
 
-## Arquitectura
+## 🛡️ Propósito y Alcance
+La **Consola de Investigación Pokémon** es un sistema de gestión de especímenes que permite a los investigadores buscar, escanear y persistir datos de Pokémon en una base de datos segura. El proyecto demuestra la capacidad de integrar servicios externos (PokéAPI) con una arquitectura de persistencia local robusta, utilizando tecnologías de vanguardia en el ecosistema de JavaScript/TypeScript.
 
-```
+---
+
+## 🚀 Stack Tecnológico
+
+| Capa | Tecnología | Razón de Elección |
+| :--- | :--- | :--- |
+| **Framework** | Next.js 15 (App Router) | Renderizado híbrido (SSR/CSR) y optimización de rutas automáticas. |
+| **Lenguaje** | TypeScript | Tipado estático para garantizar la integridad del flujo de datos. |
+| **Estilos** | CSS / Tailwind CSS v4 | Diseño de alta fidelidad con animaciones fluidas y glassmorphism. |
+| **Base de Datos** | PostgreSQL 16 | Relacional y escalable para la persistencia de colecciones. |
+| **ORM** | Drizzle ORM | Ligero, con tipado completo y migraciones controladas. |
+| **Estado Global** | Zustand | Gestión de estado minimalista y eficiente. |
+| **Seguridad** | JWT + bcrypt + Zod | Triada estándar para autenticación, hashing y validación de tipos. |
+
+---
+
+## ⚙️ Características Principales
+
+### 1. Búsqueda Inteligente (Fuzzy Search)
+Implementación del algoritmo de **Distancia de Levenshtein** en el servidor para permitir búsquedas con tolerancia a errores tipográficos. Si el usuario escribe "Pikachu" incorrectamente (ej. "Pikashu"), el sistema sugiere o redirige al espécimen correcto mediante una validación de similitud semántica.
+
+### 2. Persistencia en "Caja PC"
+A diferencia de aplicaciones simples que solo consumen APIs, este sistema permite "capturar" Pokémon, guardando sus stats base, ID y arte oficial en una base de datos local para acceso offline o histórico, vinculando cada colección de forma segura a su respectivo investigador.
+
+### 3. Observabilidad y Auditoría
+Cada acción crítica (login, registro, captura) genera un rastro de auditoría (`action_logs`) que registra la IP del cliente, el User-Agent y el timestamp, siguiendo las mejores prácticas de seguridad bancaria y corporativa.
+
+### 4. Resiliencia y Manejo de Errores
+El sistema monitorea la salud de la PokéAPI en tiempo real. Si el servicio externo presenta fallos, la interfaz notifica dinámicamente al usuario mediante alertas de mantenimiento, manteniendo la integridad operativa de las funciones locales.
+
+---
+
+## 🏗️ Arquitectura del Sistema
+
+```text
 panel-seguro/
 ├── src/
-│   ├── app/                        # Next.js App Router
-│   │   ├── (auth)/                 # Grupo de rutas publicas
-│   │   │   ├── login/page.tsx
-│   │   │   └── register/page.tsx
-│   │   ├── dashboard/              # Ruta protegida
-│   │   │   └── page.tsx
-│   │   ├── api/
-│   │   │   ├── actions/            # Server Actions
-│   │   │   │   ├── auth.actions.ts
-│   │   │   │   └── external.actions.ts
-│   │   │   ├── logs/route.ts       # API REST para logs
-│   │   │   └── user/route.ts       # API REST para usuario
-│   │   ├── layout.tsx
-│   │   └── page.tsx                # Landing
-│   │
-│   ├── components/                 # Componentes UI
-│   │   ├── auth/
-│   │   │   ├── LoginForm.tsx
-│   │   │   └── RegisterForm.tsx
-│   │   ├── dashboard/
-│   │   │   ├── ActionLogs.tsx
-│   │   │   └── ExternalData.tsx
-│   │   └── ui/
-│   │       └── VideoBackground.tsx
-│   │
-│   ├── lib/                        # Infraestructura
-│   │   ├── db.ts                   # Cliente Drizzle
-│   │   ├── validations.ts          # Schemas Zod
-│   │   └── security/
-│   │       ├── auth.ts             # bcrypt, JWT, tokens
-│   │       ├── rate-limit.ts       # Rate limiting
-│   │       └── headers.ts          # Headers OWASP
-│   │
-│   ├── services/                   # Capa de servicios
-│   │   └── postgres/
-│   │       └── schema.ts           # Tablas Drizzle
-│   │
-│   ├── store/                      # Estado global
-│   │   └── authStore.ts            # Zustand
-│   │
-│   ├── types/                      # Tipos TypeScript
-│   │   └── index.ts
-│   │
-│   └── middleware.ts               # Auth + Security headers
-│
-├── public/
-│   └── bg-vault.mp4                # Video de fondo
-│
-├── docker-compose.yml              # PostgreSQL
-├── drizzle.config.ts               # Config Drizzle ORM
-└── package.json
+│   ├── app/                    # Next.js App Router (Estructura de Rutas)
+│   ├── api/actions/            # Server Actions (Lógica de Negocio en Servidor)
+│   ├── components/             # UI Components (Átomos y Moléculas)
+│   ├── lib/                    # Infraestructura (Seguridad, Validaciones, DB)
+│   ├── services/postgres/      # Definición de Esquemas y Modelos
+│   └── store/                  # Estado Global con Zustand
+├── docker-compose.yml          # Orquestación de Base de Datos
+└── drizzle.config.ts           # Configuración del ORM
 ```
 
-## Stack
+---
 
-| Capa | Tecnologia |
-|------|-----------|
-| Frontend | Next.js 14, React 18, Tailwind CSS |
-| Lenguaje | TypeScript |
-| Base de datos | PostgreSQL 16, Drizzle ORM |
-| Estado | Zustand |
-| Validacion | Zod |
-| Auth | bcrypt, JWT, cookies HttpOnly |
-| Seguridad | Rate limiting, OWASP headers, XSS filter |
-| Contenedores | Docker |
+## 🔐 Medidas de Seguridad Implementadas
 
-## Flujo de datos
+1.  **Protección de Identidad**: Hashing de contraseñas con `bcrypt` y salt rounds de nivel industrial.
+2.  **Validación Rigurosa**: Validación de esquemas en tiempo de ejecución con `Zod`.
+3.  **Seguridad de Capa**: 
+    *   Cookies `HttpOnly`, `Secure` y `SameSite: Lax`.
+    *   Headers OWASP (CSP, HSTS, X-Frame-Options) configurados vía Middleware.
+    *   Rate Limiting para mitigar ataques de fuerza bruta en autenticación.
+4.  **Higiene de Datos**: Sanitización de inputs para prevenir inyecciones y XSS.
 
-```
-Usuario -> Middleware (auth check + headers)
-  -> Server Action (validacion Zod + rate limit)
-    -> Drizzle ORM (query segura)
-      -> PostgreSQL
-    -> Audit Log (registra accion)
-  <- Respuesta al cliente
-```
+---
 
-## Seguridad implementada
+## 🛠️ Instalación y Ejecución
 
-- Contrasenas hexadecimales (min 6 caracteres)
-- Filtro de caracteres no permitidos en todos los inputs
-- bcrypt para hash de contrasenas
-- JWT con algoritmo HS256
-- Rate limiting (login: 5/15min, registro: 3/hora)
-- Headers OWASP (CSP, HSTS, X-Frame-Options)
-- Cookies HttpOnly, Secure, SameSite
-- Audit trail de todas las acciones
+1. **Clonar el repositorio e instalar dependencias:**
+   ```bash
+   npm install
+   ```
 
-## Ramas Git
+2. **Levantar el entorno de datos (Docker):**
+   ```bash
+   docker-compose up -d
+   ```
 
-- `main` - produccion
-- `develop` - desarrollo
-- `feature/*` - funcionalidades
+3. **Ejecutar migraciones de base de datos:**
+   ```bash
+   npx drizzle-kit push
+   ```
 
-## Comandos
+4. **Iniciar el servidor de desarrollo:**
+   ```bash
+   npm run dev
+   ```
 
-```bash
-docker-compose up -d          # levantar base de datos
-npm install                   # instalar dependencias
-npx drizzle-kit generate      # generar migraciones
-npx drizzle-kit migrate       # ejecutar migraciones
-npm run dev                   # servidor desarrollo
-npm run build                 # compilar produccion
-```
+---
+
+**Desarrollado como Proyecto de Ingeniería para Prueba Técnica (2025).**

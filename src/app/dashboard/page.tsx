@@ -25,7 +25,6 @@ export default async function DashboardPage() {
 
   return (
     <div className="w-full max-w-6xl mx-auto py-8 px-4 space-y-6">
-      {/* Header */}
       <header className="bg-black/40 backdrop-blur-3xl border border-red-500/20 rounded-2xl shadow-[0_0_25px_rgba(255,0,0,0.1)] relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500/0 via-red-500/80 to-red-500/0" />
         <div className="absolute top-0 right-0 w-40 h-40 bg-red-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
@@ -57,7 +56,6 @@ export default async function DashboardPage() {
           </form>
         </div>
 
-        {/* Mini Stats Row */}
         <div className="border-t border-white/5 px-6 py-3 flex flex-wrap gap-6 items-center">
           <div className="flex items-center gap-2">
             <UserIcon size={14} className="text-red-400" />
@@ -70,13 +68,8 @@ export default async function DashboardPage() {
         </div>
       </header>
 
-
-
-      {/* Grid Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Escáner Aleatorio */}
           <section className="bg-black/40 backdrop-blur-3xl border border-red-500/20 rounded-2xl p-6 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-3xl" />
             <div className="absolute bottom-0 right-0 w-24 h-24 bg-red-500/5 rounded-full blur-3xl" />
@@ -91,7 +84,6 @@ export default async function DashboardPage() {
             <PokedexWidget />
           </section>
 
-          {/* Buscador de Pokémon - NUEVA FUNCIÓN */}
           <section className="bg-black/40 backdrop-blur-3xl border border-red-500/20 rounded-2xl p-6 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/5 rounded-full blur-3xl" />
             <div className="flex items-center gap-3 mb-6 border-b border-red-500/20 pb-4 relative z-10">
@@ -103,7 +95,6 @@ export default async function DashboardPage() {
           </section>
         </div>
 
-        {/* Sidebar: Caja PC */}
         <div className="lg:col-span-1">
           <aside className="h-full bg-black/40 backdrop-blur-3xl border border-red-500/20 rounded-2xl flex flex-col relative overflow-hidden">
             <PCBox />
