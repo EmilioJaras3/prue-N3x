@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Panel Seguro
 
-## Getting Started
+Aplicacion web de autenticacion y gestion de usuarios con arquitectura SOA.
 
-First, run the development server:
+## Arquitectura
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+panel-seguro/
+├── src/
+│   ├── app/                        # Next.js App Router
+│   │   ├── (auth)/                 # Grupo de rutas publicas
+│   │   │   ├── login/page.tsx
+│   │   │   └── register/page.tsx
+│   │   ├── dashboard/              # Ruta protegida
+│   │   │   └── page.tsx
+│   │   ├── api/
+│   │   │   ├── actions/            # Server Actions
+│   │   │   │   ├── auth.actions.ts
+│   │   │   │   └── external.actions.ts
+│   │   │   ├── logs/route.ts       # API REST para logs
+│   │   │   └── user/route.ts       # API REST para usuario
+│   │   ├── layout.tsx
+│   │   └── page.tsx                # Landing
+│   │
+│   ├── components/                 # Componentes UI
+│   │   ├── auth/
+│   │   │   ├── LoginForm.tsx
+│   │   │   └── RegisterForm.tsx
+│   │   ├── dashboard/
+│   │   │   ├── ActionLogs.tsx
+│   │   │   └── ExternalData.tsx
+│   │   └── ui/
+│   │       └── VideoBackground.tsx
+│   │
+│   ├── lib/                        # Infraestructura
+│   │   ├── db.ts                   # Cliente Drizzle
+│   │   ├── validations.ts          # Schemas Zod
+│   │   └── security/
+│   │       ├── auth.ts             # bcrypt, JWT, tokens
+│   │       ├── rate-limit.ts       # Rate limiting
+│   │       └── headers.ts          # Headers OWASP
+│   │
+│   ├── services/                   # Capa de servicios
+│   │   └── postgres/
+│   │       └── schema.ts           # Tablas Drizzle
+│   │
+│   ├── store/                      # Estado global
+│   │   └── authStore.ts            # Zustand
+│   │
+│   ├── types/                      # Tipos TypeScript
+│   │   └── index.ts
+│   │
+│   └── middleware.ts               # Auth + Security headers
+│
+├── public/
+│   └── bg-vault.mp4                # Video de fondo
+│
+├── docker-compose.yml              # PostgreSQL
+├── drizzle.config.ts               # Config Drizzle ORM
+└── package.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Capa | Tecnologia |
+|------|-----------|
+| Frontend | Next.js 14, React 18, Tailwind CSS |
+| Lenguaje | TypeScript |
+| Base de datos | PostgreSQL 16, Drizzle ORM |
+| Estado | Zustand |
+| Validacion | Zod |
+| Auth | bcrypt, JWT, cookies HttpOnly |
+| Seguridad | Rate limiting, OWASP headers, XSS filter |
+| Contenedores | Docker |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Flujo de datos
 
-## Learn More
+```
+Usuario -> Middleware (auth check + headers)
+  -> Server Action (validacion Zod + rate limit)
+    -> Drizzle ORM (query segura)
+      -> PostgreSQL
+    -> Audit Log (registra accion)
+  <- Respuesta al cliente
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Seguridad implementada
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Contrasenas hexadecimales (min 6 caracteres)
+- Filtro de caracteres no permitidos en todos los inputs
+- bcrypt para hash de contrasenas
+- JWT con algoritmo HS256
+- Rate limiting (login: 5/15min, registro: 3/hora)
+- Headers OWASP (CSP, HSTS, X-Frame-Options)
+- Cookies HttpOnly, Secure, SameSite
+- Audit trail de todas las acciones
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Ramas Git
 
-## Deploy on Vercel
+- `main` - produccion
+- `develop` - desarrollo
+- `feature/*` - funcionalidades
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Comandos
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+docker-compose up -d          # levantar base de datos
+npm install                   # instalar dependencias
+npx drizzle-kit generate      # generar migraciones
+npx drizzle-kit migrate       # ejecutar migraciones
+npm run dev                   # servidor desarrollo
+npm run build                 # compilar produccion
+```
