@@ -51,11 +51,78 @@ export async function fetchRandomPokemon(): Promise<{ success: boolean; data?: P
   }
 }
 
+// Implementación de distancia de Levenshtein
+function levenshteinDistance(s1: string, s2: string): number {
+  if (s1.length === 0) return s2.length;
+  if (s2.length === 0) return s1.length;
+  
+  const matrix: number[][] = [];
+  for (let i = 0; i <= s1.length; i++) { matrix[i] = [i]; }
+  for (let j = 0; j <= s2.length; j++) { matrix[0][j] = j; }
+  
+  for (let i = 1; i <= s1.length; i++) {
+    for (let j = 1; j <= s2.length; j++) {
+      const cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
+      matrix[i][j] = Math.min(
+        matrix[i - 1][j] + 1,
+        matrix[i][j - 1] + 1,
+        matrix[i - 1][j - 1] + cost
+      );
+    }
+  }
+  return matrix[s1.length][s2.length];
+}
+
+let cachedPokemonList: string[] | null = null;
+
 export async function searchPokemonByName(name: string): Promise<{ success: boolean; data?: PokemonData; error?: string }> {
   try {
-    const cleanName = name.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
+    let cleanName = name.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
     if (!cleanName) {
       return { success: false, error: 'Ingresa un nombre válido.' };
+    }
+
+    // Cargar la lista si no está en memoria
+    if (!cachedPokemonList) {
+      try {
+        const listRes = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000', { next: { revalidate: 3600 } });
+        if (listRes.ok) {
+          const listData = await listRes.json();
+          cachedPokemonList = listData.results.map((p: any) => p.name);
+        }
+      } catch (e) {
+        // Fallará silenciosamente y continuará
+      }
+    }
+
+    // Si tenemos la lista, intentamos encontrar el más parecido
+    if (cachedPokemonList) {
+      let bestMatch = cleanName;
+      let minDistance = Infinity;
+
+      for (const pName of cachedPokemonList) {
+        if (pName === cleanName) {
+          bestMatch = pName;
+          minDistance = 0;
+          break;
+        }
+        // Verificamos substrings directos o calculamos distancia
+        if (pName.includes(cleanName) && pName.length - cleanName.length <= 2) {
+          bestMatch = pName;
+          minDistance = 1; // Priorizar substrings si son parecidos
+        } else {
+          const dist = levenshteinDistance(cleanName, pName);
+          if (dist < minDistance) {
+            minDistance = dist;
+            bestMatch = pName;
+          }
+        }
+      }
+
+      // Si la diferencia es de 1 a 3 caracteres, lo aceptamos
+      if (minDistance > 0 && minDistance <= 3 && Math.abs(cleanName.length - bestMatch.length) <= 2) {
+         cleanName = bestMatch;
+      }
     }
 
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${cleanName}`, {

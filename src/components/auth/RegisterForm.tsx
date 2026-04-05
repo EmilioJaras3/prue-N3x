@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { registerAction } from '@/app/api/actions/auth.actions';
 import { UserIcon, MailIcon, LockIcon, ShieldCheckIcon, Loader2Icon, ArrowRightIcon } from 'lucide-react';
@@ -16,6 +16,15 @@ export default function RegisterForm() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [apiDown, setApiDown] = useState(false);
+
+  useEffect(() => {
+    fetch('https://pokeapi.co/api/v2/pokemon/1', { method: 'HEAD', cache: 'no-store' })
+      .then(res => {
+        if (!res.ok && res.status >= 500) setApiDown(true);
+      })
+      .catch(() => setApiDown(true));
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -72,13 +81,15 @@ export default function RegisterForm() {
             </div>
           </div>
 
-          <div className="bg-orange-900/40 border border-orange-500/30 text-orange-200 text-xs px-4 py-3 rounded-xl mb-6 flex gap-3 font-mono leading-relaxed shadow-[0_0_10px_rgba(249,115,22,0.1)]">
-            <span className="text-lg">⚠️</span> 
-            <div>
-              <strong className="block text-orange-400 mb-0.5 tracking-widest">AVISO DE MANTENIMIENTO</strong>
-              Algunos apartados del sistema se encuentran inactivos (PC de Bill). Si a&uacute;n no puedes iniciar sesi&oacute;n o crear cuenta, intenta m&aacute;s tarde.
+          {apiDown && (
+            <div className="bg-orange-900/40 border border-orange-500/30 text-orange-200 text-xs px-4 py-3 rounded-xl mb-6 flex gap-3 font-mono leading-relaxed shadow-[0_0_10px_rgba(249,115,22,0.1)]">
+              <span className="text-lg">⚠️</span> 
+              <div>
+                <strong className="block text-orange-400 mb-0.5 tracking-widest">AVISO DE MANTENIMIENTO</strong>
+                La Pokédex Mundial (PokéAPI) no responde. Ciertas funciones como el escáner estarán inhabilitadas al entrar al sistema.
+              </div>
             </div>
-          </div>
+          )}
 
           {error && (
             <div className="bg-red-900/40 border border-red-500/50 text-red-100 text-sm px-4 py-3 rounded-xl mb-6 flex items-center gap-3 animate-shake backdrop-blur-md shadow-[0_0_10px_rgba(255,0,0,0.3)]">

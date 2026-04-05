@@ -69,8 +69,14 @@ export default function PCBox() {
 
       {/* Modal de Stats */}
       {selected && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-          <div className="bg-[#0f0f0f] border-2 border-red-500/50 rounded-2xl p-6 w-full max-w-sm relative shadow-[0_0_50px_rgba(255,0,0,0.3)] animate-scale-in">
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in"
+          onClick={() => setSelected(null)}
+        >
+          <div 
+            className="bg-[#0f0f0f] border-2 border-red-500/50 rounded-2xl p-6 w-full max-w-sm relative shadow-[0_0_50px_rgba(255,0,0,0.3)] animate-scale-in"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               onClick={() => setSelected(null)}
               className="absolute top-4 right-4 text-white/40 hover:text-white bg-white/5 hover:bg-red-500/20 p-2 rounded-full transition-all"
@@ -125,9 +131,16 @@ export default function PCBox() {
               })()}
             </div>
             
-            <p className="text-[9px] text-center mt-6 text-white/20 font-mono uppercase tracking-[0.3em]">
+            <p className="text-[9px] text-center mt-4 mb-2 text-white/20 font-mono uppercase tracking-[0.3em]">
               Sincronizado: {new Date(selected.captured_at).toLocaleDateString()}
             </p>
+
+            <button
+              onClick={() => setSelected(null)}
+              className="w-full mt-4 py-3 bg-white/5 hover:bg-red-500/10 border border-white/10 hover:border-red-500/30 text-white/60 hover:text-red-400 font-mono text-[10px] tracking-widest uppercase rounded-xl transition-all font-bold"
+            >
+              Volver a la Caja
+            </button>
           </div>
         </div>
       )}
