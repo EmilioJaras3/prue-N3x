@@ -1,6 +1,6 @@
 import { getCurrentUser } from '@/app/api/actions/auth.actions';
 import ActionLogs from '@/components/dashboard/ActionLogs';
-import ExternalData from '@/components/dashboard/ExternalData';
+import PokedexWidget from '@/components/dashboard/PokedexWidget';
 import { redirect } from 'next/navigation';
 import { PowerIcon, ShieldCheckIcon, ActivityIcon, GlobeIcon } from 'lucide-react';
 import { logoutAction } from '@/app/api/actions/auth.actions';
@@ -27,7 +27,7 @@ export default async function DashboardPage() {
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white/5 backdrop-blur-lg border border-white/10 p-6 rounded-2xl">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <h1 className="text-2xl font-bold font-manrope">Panel Seguro</h1>
+            <h1 className="text-2xl font-bold font-manrope">Bienvenido</h1>
             <span className="bg-cyan-500/20 text-cyan-400 text-[10px] px-2 py-0.5 rounded-full font-bold tracking-wider">
               PRO VAULT
             </span>
@@ -82,7 +82,7 @@ export default async function DashboardPage() {
               <GlobeIcon className="text-cyan-400" size={24} />
               <h2 className="text-lg font-bold font-manrope">Integración API Externa</h2>
             </div>
-            <ExternalData />
+            <PokedexWidget />
           </section>
         </div>
 
