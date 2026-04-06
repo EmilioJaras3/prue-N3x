@@ -1,8 +1,8 @@
-import { db } from '@/lib/db';
-import { users } from '@/services/postgres/schema';
+import { db } from '@/restructurado/backend/infrastructure/database/client';
+import { users } from '@/restructurado/backend/infrastructure/database/services/schema';
 import { eq } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyJWT } from '@/lib/security/auth';
+import { verifyJWT } from '@/restructurado/backend/infrastructure/security/auth';
 
 export async function GET(request: NextRequest) {
   try {

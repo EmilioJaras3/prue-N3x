@@ -1,9 +1,9 @@
-import { db } from '@/lib/db';
-import { action_logs } from '@/services/postgres/schema';
+import { db } from '@/restructurado/backend/infrastructure/database/client';
+import { action_logs } from '@/restructurado/backend/infrastructure/database/services/schema';
 import { eq, desc } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyJWT } from '@/lib/security/auth';
-import { rateLimitApi } from '@/lib/security/rate-limit';
+import { verifyJWT } from '@/restructurado/backend/infrastructure/security/auth';
+import { rateLimitApi } from '@/restructurado/backend/infrastructure/security/rate-limit';
 
 export async function GET(request: NextRequest) {
   try {

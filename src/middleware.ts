@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getSecurityHeaders } from '@/lib/security/headers';
+import { getSecurityHeaders } from '@/restructurado/backend/infrastructure/security/headers';
 
 const PUBLIC_ROUTES = ['/', '/login', '/register'];
 

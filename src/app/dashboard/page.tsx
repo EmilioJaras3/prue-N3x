@@ -1,10 +1,10 @@
-import { getCurrentUser } from '@/app/api/actions/auth.actions';
-import PCBox from '@/components/dashboard/PCBox';
-import PokedexWidget from '@/components/dashboard/PokedexWidget';
-import PokemonSearch from '@/components/dashboard/PokemonSearch';
+import { getCurrentUser } from '@/restructurado/backend/actions/auth.actions';
+import PCBox from '@/restructurado/frontend/components/dashboard/PCBox';
+import PokedexWidget from '@/restructurado/frontend/components/dashboard/PokedexWidget';
+import PokemonSearch from '@/restructurado/frontend/components/dashboard/PokemonSearch';
 import { redirect } from 'next/navigation';
 import { PowerIcon, GlobeIcon, SearchIcon, UserIcon, ShieldCheckIcon, FingerprintIcon } from 'lucide-react';
-import { logoutAction } from '@/app/api/actions/auth.actions';
+import { logoutAction } from '@/restructurado/backend/actions/auth.actions';
 
 export default async function DashboardPage() {
   const result = await getCurrentUser();
