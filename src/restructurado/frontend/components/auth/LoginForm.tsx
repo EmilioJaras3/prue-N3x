@@ -65,9 +65,9 @@ export default function LoginForm() {
             <LockIcon className="text-blue-600" size={32} />
           </div>
           
-          <h2 className="text-4xl font-bold text-gray-900 mb-2 tracking-tight">¡Hola de nuevo!</h2>
-          <p className="text-gray-500 text-sm mb-8 font-manrope font-medium">
-            Entra a tu Pokédex y sigue tu aventura.
+          <h2 className="text-4xl font-black text-gray-900 mb-2 tracking-tight">¡Hola de nuevo!</h2>
+          <p className="text-gray-600 text-sm mb-8 font-manrope font-semibold">
+            Entra a tu terminal y sigue tu aventura.
           </p>
 
           {apiDown && (

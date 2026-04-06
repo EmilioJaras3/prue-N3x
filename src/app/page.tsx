@@ -46,12 +46,12 @@ export default function LandingPage() {
               Prueba Técnica - Edición Premium 2026
             </div>
             
-            <h1 className="text-6xl md:text-8xl font-black tracking-tight leading-[0.9] text-gray-900">
+            <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-[1.1] text-gray-900">
               Registra a todos <br/>
               <span className="text-blue-600 italic">tus Pokémon</span>.
             </h1>
             
-            <p className="max-w-md text-lg md:text-xl text-gray-500 font-medium leading-relaxed font-manrope">
+            <p className="max-w-md text-base md:text-lg text-gray-600 font-semibold leading-relaxed font-manrope">
               La herramienta definitiva para el Entrenador moderno. Gestiona tu colección con seguridad de grado profesional y un diseño inmersivo.
             </p>
 
