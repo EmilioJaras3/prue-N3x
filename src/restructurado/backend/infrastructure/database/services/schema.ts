@@ -53,7 +53,6 @@ export const action_logs = pgTable(
   {
     id: serial('id').primaryKey(),
     user_id: integer('user_id')
-      .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
     action_type: varchar('action_type', { length: 100 }).notNull(),
     action_details: text('action_details'),

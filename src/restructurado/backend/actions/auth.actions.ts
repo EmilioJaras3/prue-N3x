@@ -2,7 +2,7 @@
 
 import { db } from '@/restructurado/backend/infrastructure/database/client';
 import { users, sessions, action_logs } from '@/restructurado/backend/infrastructure/database/services/schema';
-import { eq } from 'drizzle-orm';
+import { eq, and, or, gt, desc } from 'drizzle-orm';
 import {
   hashPassword,
   verifyPassword,
@@ -30,7 +30,7 @@ async function getClientInfo() {
 }
 
 async function logAction(
-  userId: number,
+  userId: number | null,
   actionType: string,
   details?: string
 ) {
@@ -42,6 +42,27 @@ async function logAction(
     ip_address: ip,
     user_agent: ua,
   });
+}
+
+async function isAccountLocked(email: string, ip: string): Promise<boolean> {
+  const fifteenMinutesAgo = new Date(Date.now() - 15 * 60 * 1000);
+  
+  // Buscar intentos fallidos por IP o por Email en los detalles
+  const failedAttempts = await db
+    .select()
+    .from(action_logs)
+    .where(
+      and(
+        eq(action_logs.action_type, 'FAILED_LOGIN'),
+        gt(action_logs.created_at, fifteenMinutesAgo),
+        or(
+          eq(action_logs.ip_address, ip),
+          eq(action_logs.action_details, email)
+        )
+      )
+    );
+
+  return failedAttempts.length >= 5;
 }
 
 export async function registerAction(
@@ -96,7 +117,7 @@ export async function registerAction(
       const fieldError = error.issues[0]?.message;
       return { success: false, error: fieldError || 'Error de validación en los datos' };
     }
-    return { success: false, error: 'No se pudo crear la cuenta. Verifica que el servidor esté funcionando e intenta de nuevo.' };
+    return { success: false, error: 'No se pudo crear la cuenta' };
   }
 }
 
@@ -105,6 +126,13 @@ export async function loginAction(
 ): Promise<ApiResponse<{ token: string }>> {
   try {
     const { ip } = await getClientInfo();
+    
+    const locked = await isAccountLocked(input.email, ip);
+    if (locked) {
+      await logAction(null, 'ACCOUNT_LOCKED', input.email);
+      return { success: false, error: 'Acceso bloqueado temporalmente por seguridad. Demasiados intentos.' };
+    }
+
     const rl = rateLimitLogin(ip);
     if (!rl.allowed) {
       return { success: false, error: 'Demasiados intentos, espera 15 minutos' };
@@ -119,13 +147,14 @@ export async function loginAction(
       .limit(1);
 
     if (!foundUser) {
+      await logAction(null, 'FAILED_LOGIN', validated.email);
       return { success: false, error: 'Credenciales inválidas' };
     }
 
     const valid = await verifyPassword(validated.password, foundUser.password_hash);
     if (!valid) {
-      await logAction(foundUser.id, 'FAILED_LOGIN');
-      return { success: false, error: 'Credenciales invalidas' };
+      await logAction(foundUser.id, 'FAILED_LOGIN', validated.email);
+      return { success: false, error: 'Credenciales inválidas' };
     }
 
     const token = generateJWT(foundUser.id);
@@ -159,7 +188,7 @@ export async function loginAction(
       const fieldError = error.issues[0]?.message;
       return { success: false, error: fieldError || 'Error de validación en los datos' };
     }
-    return { success: false, error: 'No se pudo iniciar sesión. Verifica que el servidor esté funcionando e intenta de nuevo.' };
+    return { success: false, error: 'Credenciales incorrectas' };
   }
 }
 
