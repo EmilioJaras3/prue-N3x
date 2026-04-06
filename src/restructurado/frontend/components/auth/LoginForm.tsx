@@ -91,7 +91,7 @@ export default function LoginForm() {
               <div className="relative">
                 <MailIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-red-500/50" size={18} />
                 <input
-                  type="email"
+                  type="text"
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
@@ -99,11 +99,13 @@ export default function LoginForm() {
                   }}
                   placeholder="entrenador@kanto.com"
                   disabled={loading}
-                  className={`w-full pl-10 pr-4 py-3.5 bg-black/50 border ${fieldErrors.email ? 'border-red-500/50' : 'border-white/10'} rounded-xl text-white placeholder-white/20 focus:outline-none focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 transition-all disabled:opacity-50 font-mono text-sm`}
+                  autoComplete="email"
+                  onInvalid={e => e.preventDefault()}
+                  className={`w-full pl-10 pr-4 py-3.5 bg-black/50 border ${fieldErrors.email ? 'border-red-500/50 shadow-[0_0_10px_rgba(255,0,0,0.2)]' : 'border-white/10'} rounded-xl text-white placeholder-white/20 focus:outline-none focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 transition-all disabled:opacity-50 font-mono text-sm`}
                 />
               </div>
               {fieldErrors.email && (
-                <p className="text-red-500 text-[10px] font-bold uppercase tracking-wider ml-1 animate-fade-in">{fieldErrors.email}</p>
+                <p className="text-red-400 text-[11px] font-bold uppercase tracking-wider ml-1 mt-1 animate-fade-in bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-1.5">{fieldErrors.email}</p>
               )}
             </div>
 
@@ -121,13 +123,15 @@ export default function LoginForm() {
                       if (fieldErrors.password) setFieldErrors({ ...fieldErrors, password: undefined });
                     }
                   }}
-                  placeholder="Autorización nivel 6 requerida"
+                  placeholder="Autorizacion nivel 6 requerida"
                   disabled={loading}
-                  className={`w-full pl-10 pr-4 py-3.5 bg-black/50 border ${fieldErrors.password ? 'border-red-500/50' : 'border-white/10'} rounded-xl text-white placeholder-white/20 focus:outline-none focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 transition-all disabled:opacity-50 font-mono text-sm tracking-widest`}
+                  autoComplete="current-password"
+                  onInvalid={e => e.preventDefault()}
+                  className={`w-full pl-10 pr-4 py-3.5 bg-black/50 border ${fieldErrors.password ? 'border-red-500/50 shadow-[0_0_10px_rgba(255,0,0,0.2)]' : 'border-white/10'} rounded-xl text-white placeholder-white/20 focus:outline-none focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 transition-all disabled:opacity-50 font-mono text-sm tracking-widest`}
                 />
               </div>
               {fieldErrors.password && (
-                <p className="text-red-500 text-[10px] font-bold uppercase tracking-wider ml-1 animate-fade-in">{fieldErrors.password}</p>
+                <p className="text-red-400 text-[11px] font-bold uppercase tracking-wider ml-1 mt-1 animate-fade-in bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-1.5">{fieldErrors.password}</p>
               )}
             </div>
 

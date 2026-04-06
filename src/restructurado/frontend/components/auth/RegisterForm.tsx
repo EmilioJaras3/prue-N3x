@@ -121,14 +121,16 @@ export default function RegisterForm() {
                 <input
                   type="text"
                   placeholder="ej: ash_ketchum"
-                  className={`w-full pl-10 pr-4 py-3 bg-black/50 border ${fieldErrors.username ? 'border-red-500/50' : 'border-white/10'} rounded-xl text-white focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 outline-none transition-all placeholder:text-white/20 font-mono text-sm`}
+                  autoComplete="off"
+                  onInvalid={e => e.preventDefault()}
+                  className={`w-full pl-10 pr-4 py-3 bg-black/50 border ${fieldErrors.username ? 'border-red-500/50 shadow-[0_0_10px_rgba(255,0,0,0.2)]' : 'border-white/10'} rounded-xl text-white focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 outline-none transition-all placeholder:text-white/20 font-mono text-sm`}
                   onChange={e => {
                     setFormData({ ...formData, username: e.target.value });
                     if (fieldErrors.username) setFieldErrors({ ...fieldErrors, username: undefined });
                   }}
                 />
               </div>
-              {fieldErrors.username && <p className="text-red-500 text-[10px] font-bold uppercase tracking-wider ml-1 animate-fade-in">{fieldErrors.username}</p>}
+              {fieldErrors.username && <p className="text-red-400 text-[11px] font-bold uppercase tracking-wider ml-1 mt-1 animate-fade-in bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-1.5">{fieldErrors.username}</p>}
             </div>
 
             <div className="md:col-span-1 space-y-2">
@@ -136,13 +138,15 @@ export default function RegisterForm() {
               <input
                 type="text"
                 placeholder="Nombre en la liga"
-                className={`w-full px-4 py-3 bg-black/50 border ${fieldErrors.full_name ? 'border-red-500/50' : 'border-white/10'} rounded-xl text-white focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 outline-none transition-all placeholder:text-white/20 font-mono text-sm`}
+                autoComplete="off"
+                onInvalid={e => e.preventDefault()}
+                className={`w-full px-4 py-3 bg-black/50 border ${fieldErrors.full_name ? 'border-red-500/50 shadow-[0_0_10px_rgba(255,0,0,0.2)]' : 'border-white/10'} rounded-xl text-white focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 outline-none transition-all placeholder:text-white/20 font-mono text-sm`}
                 onChange={e => {
                   setFormData({ ...formData, full_name: e.target.value });
                   if (fieldErrors.full_name) setFieldErrors({ ...fieldErrors, full_name: undefined });
                 }}
               />
-              {fieldErrors.full_name && <p className="text-red-500 text-[10px] font-bold uppercase tracking-wider ml-1 animate-fade-in">{fieldErrors.full_name}</p>}
+              {fieldErrors.full_name && <p className="text-red-400 text-[11px] font-bold uppercase tracking-wider ml-1 mt-1 animate-fade-in bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-1.5">{fieldErrors.full_name}</p>}
             </div>
 
             <div className="md:col-span-2 space-y-2">
@@ -150,16 +154,18 @@ export default function RegisterForm() {
               <div className="relative">
                 <MailIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-red-500/50" size={16} />
                 <input
-                  type="email"
+                  type="text"
                   placeholder="entrenador@kanto.com"
-                  className={`w-full pl-10 pr-4 py-3 bg-black/50 border ${fieldErrors.email ? 'border-red-500/50' : 'border-white/10'} rounded-xl text-white focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 outline-none transition-all placeholder:text-white/20 font-mono text-sm`}
+                  autoComplete="email"
+                  onInvalid={e => e.preventDefault()}
+                  className={`w-full pl-10 pr-4 py-3 bg-black/50 border ${fieldErrors.email ? 'border-red-500/50 shadow-[0_0_10px_rgba(255,0,0,0.2)]' : 'border-white/10'} rounded-xl text-white focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 outline-none transition-all placeholder:text-white/20 font-mono text-sm`}
                   onChange={e => {
                     setFormData({ ...formData, email: e.target.value });
                     if (fieldErrors.email) setFieldErrors({ ...fieldErrors, email: undefined });
                   }}
                 />
               </div>
-              {fieldErrors.email && <p className="text-red-500 text-[10px] font-bold uppercase tracking-wider ml-1 animate-fade-in">{fieldErrors.email}</p>}
+              {fieldErrors.email && <p className="text-red-400 text-[11px] font-bold uppercase tracking-wider ml-1 mt-1 animate-fade-in bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-1.5">{fieldErrors.email}</p>}
             </div>
 
             <div className="md:col-span-2 space-y-2">
@@ -168,9 +174,11 @@ export default function RegisterForm() {
                 <LockIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-red-500/50" size={16} />
                 <input
                   type="password"
-                  placeholder="Autorización requerida (mín. 6)"
+                  placeholder="Autorizacion requerida (min. 6)"
                   value={formData.password}
-                  className={`w-full pl-10 pr-4 py-3 bg-black/50 border ${fieldErrors.password ? 'border-red-500/50' : 'border-white/10'} rounded-xl text-white focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 outline-none transition-all placeholder:text-white/20 font-mono text-sm tracking-widest`}
+                  autoComplete="new-password"
+                  onInvalid={e => e.preventDefault()}
+                  className={`w-full pl-10 pr-4 py-3 bg-black/50 border ${fieldErrors.password ? 'border-red-500/50 shadow-[0_0_10px_rgba(255,0,0,0.2)]' : 'border-white/10'} rounded-xl text-white focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 outline-none transition-all placeholder:text-white/20 font-mono text-sm tracking-widest`}
                   onChange={e => {
                     const val = e.target.value;
                     if (val === '' || /^[a-zA-Z0-9\.]*$/.test(val)) {
@@ -180,7 +188,7 @@ export default function RegisterForm() {
                   }}
                 />
               </div>
-              {fieldErrors.password && <p className="text-red-500 text-[10px] font-bold uppercase tracking-wider ml-1 animate-fade-in">{fieldErrors.password}</p>}
+              {fieldErrors.password && <p className="text-red-400 text-[11px] font-bold uppercase tracking-wider ml-1 mt-1 animate-fade-in bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-1.5">{fieldErrors.password}</p>}
             </div>
 
             <div className="md:col-span-2 mt-2">
