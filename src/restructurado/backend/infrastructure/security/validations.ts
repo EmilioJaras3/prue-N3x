@@ -19,10 +19,10 @@ function hasDangerousContent(input: string): boolean {
 
 export const passwordSchema = z
   .string()
-  .min(6, 'La contraseña debe tener al menos 6 caracteres')
-  .max(128, 'La contraseña no puede tener más de 128 caracteres')
-  .regex(/^[a-zA-Z0-9\.]+$/, 'La contraseña solo acepta letras y números. No se permiten caracteres especiales.')
-  .refine((v: string) => !hasDangerousContent(v), 'La contraseña contiene caracteres no permitidos')
+  .min(6, 'Por seguridad, usa al menos 6 caracteres.')
+  .max(128, 'La contraseña es demasiado larga.')
+  .regex(/^[0-9a-fA-F]+$/, 'Por favor, usa solo números y letras de la A a la F.')
+  .refine((v: string) => !hasDangerousContent(v), 'La contraseña contiene caracteres no permitidos.')
   .transform(sanitize);
 
 export const emailSchema = z
