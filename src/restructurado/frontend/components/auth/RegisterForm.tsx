@@ -34,11 +34,11 @@ export default function RegisterForm() {
 
     try {
       // Map 'name' input to both username and full_name to satisfy the schema with 3 fields
-      const result = await registerAction({ 
-        username: name, 
+      const result = await registerAction({
+        username: name,
         full_name: name,
-        email, 
-        password 
+        email,
+        password
       });
       if (result.success) {
         router.push('/login?registered=true');
@@ -58,8 +58,8 @@ export default function RegisterForm() {
         {/* Decorative Orbs */}
         <div className="absolute -top-12 -left-12 w-40 h-40 bg-blue-400/20 rounded-full blur-3xl group-hover:bg-blue-300/30 transition-all duration-700" />
         <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-yellow-400/10 rounded-full blur-3xl transition-all duration-700" />
-        
-        
+
+
         <div className="relative z-10">
           <div className="flex items-center gap-4 mb-8">
             <div className="w-16 h-16 bg-yellow-400/10 rounded-2xl flex items-center justify-center border border-yellow-200">
@@ -118,7 +118,7 @@ export default function RegisterForm() {
             </div>
 
             <div className="space-y-2 md:col-span-2">
-              <label className="block text-gray-400 text-[11px] font-bold tracking-widest uppercase ml-1">Clave de Encriptación (6+ Hex)</label>
+              <label className="block text-gray-400 text-[11px] font-bold tracking-widest uppercase ml-1">Contraseña</label>
               <div className="relative">
                 <LockIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                 <input

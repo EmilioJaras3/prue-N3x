@@ -59,12 +59,12 @@ export default function LoginForm() {
         {/* Decorative Orbs inside card */}
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-yellow-400/20 rounded-full blur-3xl group-hover:bg-yellow-300/30 transition-all duration-700" />
         <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-400/10 rounded-full blur-3xl transition-all duration-700" />
-        
+
         <div className="relative z-10">
           <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8 border border-blue-200 shadow-sm">
             <LockIcon className="text-blue-600" size={32} />
           </div>
-          
+
           <h2 className="text-4xl font-black text-gray-900 mb-2 tracking-tight">¡Hola de nuevo!</h2>
           <p className="text-gray-600 text-sm mb-8 font-manrope font-semibold">
             Entra a tu terminal y sigue tu aventura.
@@ -108,7 +108,7 @@ export default function LoginForm() {
             </div>
 
             <div className="space-y-2">
-              <label className="block text-gray-400 text-[11px] font-bold tracking-widest uppercase ml-1">Clave Secreta</label>
+              <label className="block text-gray-400 text-[11px] font-bold tracking-widest uppercase ml-1">Contraseña</label>
               <div className="relative">
                 <LockIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                 <input
@@ -116,10 +116,8 @@ export default function LoginForm() {
                   value={password}
                   onChange={(e) => {
                     const val = e.target.value;
-                    if (val === '' || /^[a-zA-Z0-9\.]*$/.test(val)) {
-                      setPassword(val);
-                      if (fieldErrors.password) setFieldErrors({ ...fieldErrors, password: undefined });
-                    }
+                    setPassword(val);
+                    if (fieldErrors.password) setFieldErrors({ ...fieldErrors, password: undefined });
                   }}
                   placeholder="••••••••"
                   disabled={loading}
