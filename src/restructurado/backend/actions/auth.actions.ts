@@ -93,8 +93,8 @@ export async function registerAction(
     return { success: true, data: { userId: newUser.id } };
   } catch (error: unknown) {
     if (error instanceof ZodError) {
-      const firstMsg = error.issues[0]?.message || 'Los datos ingresados no son válidos';
-      return { success: false, error: firstMsg };
+      const fieldError = error.issues[0]?.message;
+      return { success: false, error: fieldError || 'Error de validación en los datos' };
     }
     return { success: false, error: 'No se pudo crear la cuenta. Verifica que el servidor esté funcionando e intenta de nuevo.' };
   }
@@ -119,7 +119,7 @@ export async function loginAction(
       .limit(1);
 
     if (!foundUser) {
-      return { success: false, error: 'Credenciales invalidas' };
+      return { success: false, error: 'Credenciales inválidas' };
     }
 
     const valid = await verifyPassword(validated.password, foundUser.password_hash);
@@ -156,8 +156,8 @@ export async function loginAction(
     return { success: true, data: { token } };
   } catch (error: unknown) {
     if (error instanceof ZodError) {
-      const firstMsg = error.issues[0]?.message || 'Los datos ingresados no son válidos';
-      return { success: false, error: firstMsg };
+      const fieldError = error.issues[0]?.message;
+      return { success: false, error: fieldError || 'Error de validación en los datos' };
     }
     return { success: false, error: 'No se pudo iniciar sesión. Verifica que el servidor esté funcionando e intenta de nuevo.' };
   }
@@ -169,7 +169,7 @@ export async function logoutAction(): Promise<ApiResponse<null>> {
     cookieStore.delete('auth_token');
     return { success: true, data: null };
   } catch {
-    return { success: false, error: 'Error al cerrar sesion' };
+    return { success: false, error: 'Error al cerrar sesión' };
   }
 }
 
@@ -191,7 +191,7 @@ export async function getCurrentUser(): Promise<ApiResponse<{
 
     const payload = verifyJWT(token);
     if (!payload) {
-      return { success: false, error: 'Token invalido' };
+      return { success: false, error: 'Token inválido' };
     }
 
     const [user] = await db

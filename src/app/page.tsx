@@ -14,7 +14,7 @@ export default function LandingPage() {
           <div className="w-10 h-10 bg-yellow-400 rounded-xl flex items-center justify-center border-2 border-yellow-200">
             <span className="text-amber-900 font-black text-xl italic">P</span>
           </div>
-          <span className="text-2xl font-black tracking-tighter text-blue-600 group-hover:text-amber-500 transition-colors">DASHBOARD</span>
+          <span className="text-2xl font-black tracking-tighter text-blue-600 group-hover:text-amber-500 transition-colors uppercase">Registra tus Pokémon</span>
         </div>
         <div className="flex gap-4">
           <button 
@@ -47,12 +47,12 @@ export default function LandingPage() {
             </div>
             
             <h1 className="text-6xl md:text-8xl font-black tracking-tight leading-[0.9] text-gray-900">
-              Tu Pokédex <br/>
-              <span className="text-blue-600 italic">Evolucionada</span>.
+              Registra a todos <br/>
+              <span className="text-blue-600 italic">tus Pokémon</span>.
             </h1>
             
             <p className="max-w-md text-lg md:text-xl text-gray-500 font-medium leading-relaxed font-manrope">
-              Una plataforma segura, modular e inmersiva para investigadores de alto nivel. Gestión de datos en tiempo real con blindaje OWASP.
+              La herramienta definitiva para el Entrenador moderno. Gestiona tu colección con seguridad de grado profesional y un diseño inmersivo.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">
@@ -86,15 +86,10 @@ export default function LandingPage() {
       </main>
 
       {/* Footer Info / Trust Badges */}
-      <footer className="px-12 py-10 animate-fade-in delay-500">
-        <div className="max-w-7xl mx-auto flex flex-col md:row justify-between items-center gap-8 border-t border-gray-100 pt-10">
-          <div className="flex gap-12 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all">
-            <div className="flex items-center gap-2"><ShieldIcon size={18} /> <span className="text-[10px] font-bold uppercase tracking-widest">OWASP Top 10</span></div>
-            <div className="flex items-center gap-2"><ActivityIcon size={18} /> <span className="text-[10px] font-bold uppercase tracking-widest">Modular Arc</span></div>
-            <div className="flex items-center gap-2"><GlobeIcon size={18} /> <span className="text-[10px] font-bold uppercase tracking-widest">Global Pokedex</span></div>
-          </div>
-          <p className="text-[10px] font-bold text-gray-300 uppercase tracking-[0.3em]">
-            © 2026 Advanced Agentic Coding - Deepmind Edition
+      <footer className="w-full py-8 mt-auto relative z-10">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col items-center gap-4">
+          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
+            © 2026 Luis Emilio Jaras Sanchez
           </p>
         </div>
       </footer>
