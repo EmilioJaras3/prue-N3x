@@ -1,10 +1,11 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
+import { env } from './env';
 
-const BCRYPT_ROUNDS = parseInt(process.env.BCRYPT_ROUNDS || '10');
-const JWT_SECRET = process.env.JWT_SECRET!;
-const JWT_EXPIRATION = process.env.JWT_EXPIRATION || '7d';
+const BCRYPT_ROUNDS = env.BCRYPT_ROUNDS;
+const JWT_SECRET = env.JWT_SECRET;
+const JWT_EXPIRATION = env.JWT_EXPIRATION;
 
 export async function hashPassword(password: string): Promise<string> {
   return bcrypt.hash(password, BCRYPT_ROUNDS);
