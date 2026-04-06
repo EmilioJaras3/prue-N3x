@@ -29,7 +29,7 @@ export default async function DashboardPage() {
     <div className="w-full max-w-6xl mx-auto py-8 px-4 space-y-6 animate-in fade-in duration-700">
       <header className="bg-[#0A0A0A]/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-lg relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-50" />
-        
+
         <div className="p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative z-10">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-full bg-neutral-900 flex items-center justify-center border border-white/10 text-neutral-300 font-semibold text-lg shadow-inner shrink-0">
