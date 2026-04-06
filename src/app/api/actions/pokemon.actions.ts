@@ -7,11 +7,25 @@ export interface PokemonData {
   weight: number;
   image: string;
   type: string;
+  description?: string;
   stats: {
     hp: number;
     attack: number;
     defense: number;
   };
+}
+
+async function getPokemonDescription(speciesUrl: string): Promise<string> {
+  try {
+    const res = await fetch(speciesUrl, { next: { revalidate: 3600 } });
+    if (!res.ok) return "Descripción no disponible.";
+    const data = await res.json();
+    const entry = data.flavor_text_entries.find((e: any) => e.language.name === 'es') 
+               || data.flavor_text_entries.find((e: any) => e.language.name === 'en');
+    return entry ? entry.flavor_text.replace(/[\n\f\r]/g, ' ') : "Sin datos registrados.";
+  } catch {
+    return "Error al desencriptar el archivo del espécimen.";
+  }
 }
 
 export async function fetchRandomPokemon(): Promise<{ success: boolean; data?: PokemonData; error?: string }> {
@@ -27,6 +41,7 @@ export async function fetchRandomPokemon(): Promise<{ success: boolean; data?: P
     }
 
     const data = await res.json();
+    const description = await getPokemonDescription(data.species.url);
     
     const pokemon: PokemonData = {
       name: data.name,
@@ -35,6 +50,7 @@ export async function fetchRandomPokemon(): Promise<{ success: boolean; data?: P
       weight: data.weight,
       image: data.sprites.other['official-artwork'].front_default || data.sprites.front_default,
       type: data.types[0].type.name,
+      description,
       stats: {
         hp: data.stats.find((s: any) => s.stat.name === 'hp')?.base_stat || 0,
         attack: data.stats.find((s: any) => s.stat.name === 'attack')?.base_stat || 0,
@@ -124,6 +140,7 @@ export async function searchPokemonByName(name: string): Promise<{ success: bool
     }
 
     const data = await res.json();
+    const description = await getPokemonDescription(data.species.url);
     
     const pokemon: PokemonData = {
       name: data.name,
@@ -132,6 +149,7 @@ export async function searchPokemonByName(name: string): Promise<{ success: bool
       weight: data.weight,
       image: data.sprites.other['official-artwork'].front_default || data.sprites.front_default,
       type: data.types[0].type.name,
+      description,
       stats: {
         hp: data.stats.find((s: any) => s.stat.name === 'hp')?.base_stat || 0,
         attack: data.stats.find((s: any) => s.stat.name === 'attack')?.base_stat || 0,

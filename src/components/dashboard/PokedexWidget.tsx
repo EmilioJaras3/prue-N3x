@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { fetchRandomPokemon, PokemonData } from '@/app/api/actions/pokemon.actions';
-import { ScanIcon, ShieldAlertIcon, ActivityIcon, DropletsIcon } from 'lucide-react';
+import { ScanIcon, ShieldAlertIcon, ActivityIcon, FingerprintIcon } from 'lucide-react';
 
 export default function PokedexWidget() {
   const [pokemon, setPokemon] = useState<PokemonData | null>(null);
@@ -21,113 +21,117 @@ export default function PokedexWidget() {
     setLoading(false);
   };
 
-  // Cargar al montar el componente
   useEffect(() => {
     loadPokemon();
   }, []);
 
   return (
-    <div className="bg-black/60 backdrop-blur-3xl border border-red-500/20 rounded-2xl p-6 relative overflow-hidden group shadow-[inset_0_0_50px_rgba(255,0,0,0.05)]">
-      {/* Efectos de fondo dark/hacker */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-red-600/20 rounded-full blur-[50px] -z-10 group-hover:bg-red-500/30 transition-all duration-500" />
-      <div className="absolute bottom-0 left-0 w-24 h-24 bg-cyan-500/10 rounded-full blur-[40px] -z-10" />
-
-      <div className="flex justify-between items-center mb-6 border-b border-red-500/20 pb-4">
-        <h3 className="text-lg font-space font-bold flex items-center gap-2 text-white tracking-widest uppercase">
-          <ScanIcon className="text-red-500" size={20} />
-          <span>Archivo Escáner</span>
+    <article className="bg-[#0A0A0A]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 relative overflow-hidden group shadow-lg">
+      <div className="absolute top-0 right-0 w-full h-[1px] bg-gradient-to-l from-transparent via-white/10 to-transparent" />
+      
+      <div className="flex justify-between items-center mb-6">
+        <h3 className="text-sm font-manrope font-semibold flex items-center gap-2 text-white/80 tracking-wide">
+          <FingerprintIcon className="text-neutral-400" size={16} />
+          <span>Análisis de Espécimen</span>
         </h3>
         <button 
           onClick={loadPokemon}
           disabled={loading}
-          className="text-xs bg-red-500/10 hover:bg-red-500/30 text-white px-4 py-2 rounded-lg transition-all border border-red-500/30 disabled:opacity-50 flex items-center gap-2 font-mono uppercase tracking-widest shadow-[0_0_15px_rgba(255,0,0,0.2)]"
+          className="text-xs bg-white/5 hover:bg-white/10 text-white/90 px-3 py-1.5 rounded-md transition-all border border-white/10 disabled:opacity-50 flex items-center gap-2 font-inter focus-visible:ring-2 focus-visible:ring-neutral-400 focus:outline-none"
+          aria-live="polite"
         >
           {loading ? (
-            <span className="w-4 h-4 border-2 border-red-400 border-t-transparent rounded-full animate-spin"></span>
+            <span className="w-3.5 h-3.5 border-2 border-neutral-400 border-t-transparent rounded-full animate-spin"></span>
           ) : (
-            <ActivityIcon size={14} className="text-red-400" />
+            <ActivityIcon size={14} className="text-neutral-400" />
           )}
-          {loading ? 'DEDIFICANDO...' : 'ESCANEAR'}
+          {loading ? 'Consultando…' : 'Escanear'}
         </button>
       </div>
 
-      {error ? (
-        <div className="flex flex-col items-center justify-center gap-4 py-8 text-center animate-fade-in group">
-          <div className="w-16 h-16 bg-red-900/40 border border-red-500/50 rounded-2xl flex items-center justify-center backdrop-blur-md shadow-[0_0_30px_rgba(255,0,0,0.3)] group-hover:scale-105 transition-transform">
-            <ShieldAlertIcon size={32} className="text-red-400 animate-pulse" />
-          </div>
-          <div className="space-y-1">
-            <h4 className="text-red-400 font-bold font-space uppercase tracking-widest">ERROR CRITICO</h4>
-            <p className="text-red-200/70 text-sm font-mono max-w-sm">Conexión con PokéAPI perdida. Reintentando señal al servidor de Bill...</p>
-            <p className="text-red-500/50 text-[10px] uppercase tracking-widest mt-2 block">[ ERROR TYPE: NETWORK_UNREACHABLE ]</p>
-          </div>
-        </div>
-      ) : loading && !pokemon ? (
-        <div className="h-48 flex items-center justify-center">
-          <div className="flex flex-col items-center gap-3">
-            <ScanIcon className="text-cyan-400 animate-[spin_3s_linear_infinite]" size={40} />
-            <p className="text-cyan-400/70 text-xs font-mono uppercase tracking-widest animate-pulse">Sensores inactivos. Esperando escaneo...</p>
-          </div>
-        </div>
-      ) : pokemon ? (
-        <div className="flex flex-col md:flex-row gap-6">
-          <div className="relative w-32 h-32 mx-auto md:mx-0 bg-gradient-to-b from-red-500/20 to-black/80 rounded-xl border border-red-500/30 flex items-center justify-center p-2 group-hover:shadow-[0_0_30px_rgba(255,0,0,0.3)] transition-all">
-            <img 
-              src={pokemon.image} 
-              alt={pokemon.name} 
-              className="w-full h-full object-contain filter drop-shadow-[0_0_20px_rgba(255,0,0,0.5)]"
-            />
-            <div className="absolute top-2 left-2 text-[10px] text-red-300 font-mono tracking-widest font-bold">
-              ID::{String(pokemon.id).padStart(3, '0')}
+      <div className="min-h-[220px] transition-all duration-500 ease-in-out" aria-live="polite">
+        {error ? (
+          <div className="flex flex-col items-center justify-center gap-4 h-full text-center animate-in fade-in zoom-in-95 duration-500">
+            <div className="w-12 h-12 bg-neutral-900 border border-neutral-800 rounded-xl flex items-center justify-center">
+              <ShieldAlertIcon size={24} className="text-neutral-500" />
             </div>
-            <div className="absolute bottom-2 right-2 text-[8px] text-cyan-400 font-mono uppercase tracking-widest bg-cyan-900/30 px-1 border border-cyan-500/30">
-              SCAN OK
+            <div className="space-y-1">
+              <h4 className="text-neutral-300 font-semibold font-manrope text-sm">Error de conexión</h4>
+              <p className="text-neutral-500 text-xs font-inter max-w-sm">No se pudo acceder a la red de Kanto. Intente nuevamente.</p>
             </div>
           </div>
-          
-          <div className="flex-1 space-y-4">
-            <div>
-              <h4 className="text-2xl lg:text-3xl font-bold font-space text-white uppercase tracking-wider flex items-center gap-3 max-w-full truncate">
-                <span className="truncate" title={pokemon.name}>{pokemon.name}</span>
-                <div className="h-0.5 flex-1 bg-gradient-to-r from-red-500/50 to-transparent"></div>
-              </h4>
-              <div className="flex gap-2 mt-2">
-                <span className="text-[10px] font-bold uppercase bg-red-500/20 text-red-200 px-3 py-1 rounded-sm border border-red-500/50 tracking-widest shadow-[0_0_10px_rgba(255,0,0,0.2)]">
-                  TYPE: {pokemon.type}
-                </span>
-                <span className="text-[10px] font-bold uppercase bg-white/5 text-neutral-300 px-3 py-1 rounded-sm border border-white/20 tracking-widest">
-                  WT: {pokemon.weight / 10}kg
-                </span>
-                <span className="text-[10px] font-bold uppercase bg-white/5 text-neutral-300 px-3 py-1 rounded-sm border border-white/20 tracking-widest">
-                  HT: {pokemon.height / 10}m
-                </span>
+        ) : loading && !pokemon ? (
+          <div className="flex h-full items-center justify-center animate-pulse">
+            <div className="flex flex-col items-center gap-3">
+              <ScanIcon className="text-neutral-600 animate-[spin_4s_linear_infinite]" size={32} />
+              <p className="text-neutral-600 text-xs font-inter tracking-wide">Descifrando datos…</p>
+            </div>
+          </div>
+        ) : pokemon ? (
+          <div className="flex flex-col md:flex-row gap-8 animate-in fade-in slide-in-from-bottom-2 duration-700">
+            {/* Imagen Minimalista */}
+            <div className="relative w-32 h-32 md:w-40 md:h-40 shrink-0 mx-auto md:mx-0 bg-neutral-900/50 rounded-[2rem] border border-white/5 flex items-center justify-center p-4">
+              <img 
+                src={pokemon.image} 
+                alt={`Imagen oficial de ${pokemon.name}`} 
+                width={128}
+                height={128}
+                className="w-full h-full object-contain filter drop-shadow-lg transition-transform duration-700 hover:scale-110"
+                loading="lazy"
+              />
+              <div className="absolute top-3 left-3 text-[10px] text-neutral-500 font-inter font-medium">
+                #{String(pokemon.id).padStart(3, '0')}
               </div>
             </div>
+            
+            {/* Datos */}
+            <div className="flex-1 flex flex-col justify-center space-y-4">
+              <div>
+                <h4 className="text-2xl font-bold font-manrope text-white capitalize tracking-tight flex items-baseline gap-3">
+                  <span className="truncate" title={pokemon.name}>{pokemon.name}</span>
+                  <span className="text-xs font-medium bg-neutral-800 text-neutral-300 px-2.5 py-0.5 rounded-full border border-neutral-700 uppercase tracking-widest">
+                    {pokemon.type}
+                  </span>
+                </h4>
+                
+                {pokemon.description && (
+                  <p className="mt-2 text-sm text-neutral-400 font-inter leading-relaxed line-clamp-2">
+                    {pokemon.description}
+                  </p>
+                )}
 
-            <div className="space-y-3 bg-black/40 p-4 rounded-xl border border-white/5">
-              <div className="text-xs text-cyan-400 font-mono mb-2 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse blur-[1px]"></span>
-                MATRIZ DE STATS BASE
-              </div>
-              
-              {[
-                { label: 'HP', val: pokemon.stats.hp, max: 200, color: 'bg-red-500', text: 'text-red-400' },
-                { label: 'ATK', val: pokemon.stats.attack, max: 200, color: 'bg-orange-500', text: 'text-orange-400' },
-                { label: 'DEF', val: pokemon.stats.defense, max: 200, color: 'bg-blue-500', text: 'text-blue-400' },
-              ].map((stat, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <div className={`w-10 text-[10px] font-bold font-space tracking-widest ${stat.text}`}>{stat.label}</div>
-                  <div className="flex-1 h-3 bg-black/80 rounded-sm border border-white/10 overflow-hidden relative">
-                    <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjEwIj48cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIxMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjEpIi8+PC9zdmc+')] opacity-50 z-10" />
-                    <div className={`h-full ${stat.color} shadow-[0_0_10px_currentColor] relative z-0`} style={{ width: `${Math.min(100, (stat.val / stat.max) * 100)}%` }} />
-                  </div>
-                  <div className="w-8 text-[10px] text-right font-mono text-white font-bold">{stat.val}</div>
+                <div className="flex gap-4 mt-4 text-xs font-inter text-neutral-500">
+                  <span className="flex items-center gap-1.5"><strong className="text-neutral-300">Peso:</strong> {pokemon.weight / 10}kg</span>
+                  <span className="flex items-center gap-1.5"><strong className="text-neutral-300">Altura:</strong> {pokemon.height / 10}m</span>
                 </div>
-              ))}
+              </div>
+
+              {/* Matriz de Stats (Minimalista) */}
+              <div className="pt-2">
+                <div className="text-[10px] text-neutral-500 font-inter tracking-widest uppercase mb-3 font-semibold">
+                  Métricas Base
+                </div>
+                
+                <div className="grid gap-3">
+                  {[
+                    { label: 'HP', val: pokemon.stats.hp, max: 200, color: 'bg-emerald-500/80' },
+                    { label: 'ATK', val: pokemon.stats.attack, max: 200, color: 'bg-rose-500/80' },
+                    { label: 'DEF', val: pokemon.stats.defense, max: 200, color: 'bg-sky-500/80' },
+                  ].map((stat, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <div className="w-8 text-[10px] font-semibold text-neutral-400">{stat.label}</div>
+                      <div className="flex-1 h-1.5 bg-neutral-800 rounded-full overflow-hidden">
+                        <div className={`h-full ${stat.color} rounded-full transition-all duration-1000 ease-out`} style={{ width: `${Math.min(100, (stat.val / stat.max) * 100)}%` }} />
+                      </div>
+                      <div className="w-6 text-[10px] text-right font-inter text-neutral-300">{stat.val}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      ) : null}
-    </div>
+        ) : null}
+      </div>
+    </article>
   );
 }

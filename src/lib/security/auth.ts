@@ -22,12 +22,13 @@ export async function verifyPassword(
 }
 
 export function generateJWT(userId: number): string {
-  if (!JWT_SECRET) throw new Error('JWT_SECRET no configurado');
-  return jwt.sign(
-    { sub: userId, iat: Math.floor(Date.now() / 1000), type: 'access' },
-    JWT_SECRET,
-    { expiresIn: JWT_EXPIRATION, algorithm: 'HS256', issuer: 'panel-seguro' }
-  );
+  const secret = JWT_SECRET as jwt.Secret;
+  const payload = { sub: String(userId), iat: Math.floor(Date.now() / 1000), type: 'access' };
+  return jwt.sign(payload, secret, { 
+    expiresIn: JWT_EXPIRATION as jwt.SignOptions['expiresIn'], 
+    algorithm: 'HS256', 
+    issuer: 'panel-seguro' 
+  });
 }
 
 export function verifyJWT(token: string): { userId: number } | null {
@@ -36,8 +37,12 @@ export function verifyJWT(token: string): { userId: number } | null {
     const decoded = jwt.verify(token, JWT_SECRET, {
       algorithms: ['HS256'],
       issuer: 'panel-seguro',
-    }) as { sub: number };
-    return { userId: decoded.sub };
+    }) as jwt.JwtPayload;
+    
+    if (decoded && decoded.sub) {
+      return { userId: parseInt(decoded.sub as string) };
+    }
+    return null;
   } catch {
     return null;
   }

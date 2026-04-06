@@ -9,6 +9,7 @@ export default function LoginForm() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [apiDown, setApiDown] = useState(false);
@@ -24,6 +25,19 @@ export default function LoginForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError('');
+    setFieldErrors({});
+
+    // Validaciones manuales estéticas
+    const newErrors: { email?: string; password?: string } = {};
+    if (!email) newErrors.email = 'El ID Universal es obligatorio';
+    if (!password) newErrors.password = 'La Clave Secreta es obligatoria';
+    else if (password.length < 6) newErrors.password = 'La clave debe tener al menos 6 caracteres';
+
+    if (Object.keys(newErrors).length > 0) {
+      setFieldErrors(newErrors);
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -71,7 +85,7 @@ export default function LoginForm() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} noValidate className="space-y-5">
             <div className="space-y-2">
               <label className="block text-red-200/70 text-xs font-bold tracking-widest uppercase ml-1">ID Universal (Correo)</label>
               <div className="relative">
@@ -79,13 +93,18 @@ export default function LoginForm() {
                 <input
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (fieldErrors.email) setFieldErrors({ ...fieldErrors, email: undefined });
+                  }}
                   placeholder="entrenador@kanto.com"
-                  required
                   disabled={loading}
-                  className="w-full pl-10 pr-4 py-3.5 bg-black/50 border border-white/10 rounded-xl text-white placeholder-white/20 focus:outline-none focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 transition-all disabled:opacity-50 font-mono text-sm"
+                  className={`w-full pl-10 pr-4 py-3.5 bg-black/50 border ${fieldErrors.email ? 'border-red-500/50' : 'border-white/10'} rounded-xl text-white placeholder-white/20 focus:outline-none focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 transition-all disabled:opacity-50 font-mono text-sm`}
                 />
               </div>
+              {fieldErrors.email && (
+                <p className="text-red-500 text-[10px] font-bold uppercase tracking-wider ml-1 animate-fade-in">{fieldErrors.email}</p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -99,14 +118,17 @@ export default function LoginForm() {
                     const val = e.target.value;
                     if (val === '' || /^[a-zA-Z0-9\.]*$/.test(val)) {
                       setPassword(val);
+                      if (fieldErrors.password) setFieldErrors({ ...fieldErrors, password: undefined });
                     }
                   }}
                   placeholder="Autorización nivel 6 requerida"
-                  required
                   disabled={loading}
-                  className="w-full pl-10 pr-4 py-3.5 bg-black/50 border border-white/10 rounded-xl text-white placeholder-white/20 focus:outline-none focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 transition-all disabled:opacity-50 font-mono text-sm tracking-widest"
+                  className={`w-full pl-10 pr-4 py-3.5 bg-black/50 border ${fieldErrors.password ? 'border-red-500/50' : 'border-white/10'} rounded-xl text-white placeholder-white/20 focus:outline-none focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 transition-all disabled:opacity-50 font-mono text-sm tracking-widest`}
                 />
               </div>
+              {fieldErrors.password && (
+                <p className="text-red-500 text-[10px] font-bold uppercase tracking-wider ml-1 animate-fade-in">{fieldErrors.password}</p>
+              )}
             </div>
 
             <button

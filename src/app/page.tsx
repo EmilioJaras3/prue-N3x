@@ -1,65 +1,84 @@
 import Link from 'next/link';
+import { DatabaseIcon } from 'lucide-react';
 
 export default function LandingPage() {
   return (
-    <div className="w-full max-w-5xl mx-auto flex flex-col items-center text-center px-4 py-10">
-      <div className="mb-8 animate-fade-in relative">
-        <div className="w-20 h-20 rounded-full border-4 border-red-500/50 flex items-center justify-center bg-black/60 backdrop-blur-xl shadow-[0_0_40px_rgba(255,0,0,0.3)] relative overflow-hidden group">
-          <div className="absolute top-0 left-0 w-full h-1/2 bg-red-500/20" />
-          <div className="absolute bottom-0 left-0 w-full h-1/2 bg-white/5" />
-          <div className="absolute top-1/2 left-0 w-full h-[3px] bg-red-500/60 -translate-y-1/2 z-10" />
-          <div className="w-6 h-6 rounded-full border-2 border-red-500/70 bg-black/80 relative z-20 shadow-[0_0_15px_rgba(255,0,0,0.5)] group-hover:shadow-[0_0_25px_rgba(255,0,0,0.8)] transition-all" />
-        </div>
-        <div className="absolute -inset-4 bg-red-500/10 rounded-full blur-2xl -z-10 animate-pulse" />
-      </div>
+    <div className="min-h-screen w-full bg-transparent text-white flex flex-col items-center justify-center relative overflow-hidden font-inter selection:bg-red-500/30">
+      
+      {/* Background Ambience sutil (para no tapar el video glboal) */}
+      <div className="absolute top-[-20%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-red-600/10 blur-[150px] mix-blend-screen pointer-events-none" />
 
-      <h1 className="text-5xl md:text-7xl font-bold font-space mb-6 leading-tight tracking-tighter">
-        <span className="bg-gradient-to-b from-white via-white to-white/30 bg-clip-text text-transparent">Caja</span>
-        <br />
-        <span className="bg-gradient-to-r from-red-500 to-red-400 bg-clip-text text-transparent">Pokémon</span>
-      </h1>
+      <div className="w-full max-w-7xl mx-auto px-6 py-12 md:py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+        
+        {/* Left Column - Hero Text */}
+        <div className="flex flex-col items-start text-left space-y-8">
+          
+          <h1 className="text-5xl md:text-7xl font-black font-manrope tracking-tighter leading-[1.1]">
+            <span className="text-white">Explora.</span><br />
+            <span className="text-neutral-500">Clasifica.</span><br />
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-rose-400">
+              Colecciona.
+            </span>
+          </h1>
+          
+          <p className="text-lg text-neutral-300 font-inter max-w-lg leading-relaxed">
+            Tu propio Sistema de Almacenamiento Pokémon. Inicia sesión en tu PC para consultar la Pokédex Nacional, transferir nuevas especies capturadas y organizar a todo tu equipo.
+          </p>
 
-      <p className="text-base md:text-lg text-white/60 max-w-xl mb-12 leading-relaxed font-manrope">
-        ¡Guarda todos los Pokémon que atrapes en tu propia caja digital!
-        Busca, escanea y colecciona especies de todas las regiones.
-      </p>
-
-      <div className="flex flex-col sm:flex-row gap-4 mb-20">
-        <Link 
-          href="/login"
-          className="px-10 py-4 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-bold tracking-widest uppercase rounded-xl transition-all duration-300 shadow-[0_0_25px_rgba(255,0,0,0.3)] hover:shadow-[0_0_40px_rgba(255,0,0,0.5)] hover:scale-105 border border-red-400/30 font-space text-sm"
-        >
-          ¡Ya Tengo Cuenta!
-        </Link>
-        <Link 
-          href="/register"
-          className="px-10 py-4 bg-black/40 hover:bg-black/60 text-white/80 hover:text-white font-bold tracking-widest uppercase rounded-xl border border-white/10 hover:border-red-500/30 transition-all duration-300 backdrop-blur-xl font-space text-sm"
-        >
-          Soy Nuevo Entrenador
-        </Link>
-      </div>
-
-      <div className="grid grid-cols-3 md:grid-cols-6 gap-3 w-full">
-        {[
-          { type: 'Fuego', color: 'from-orange-600/30 to-red-600/30', border: 'border-orange-500/30' },
-          { type: 'Agua', color: 'from-blue-600/30 to-cyan-600/30', border: 'border-blue-500/30' },
-          { type: 'Eléctrico', color: 'from-yellow-600/30 to-amber-600/30', border: 'border-yellow-500/30' },
-          { type: 'Planta', color: 'from-green-600/30 to-emerald-600/30', border: 'border-green-500/30' },
-          { type: 'Psíquico', color: 'from-purple-600/30 to-pink-600/30', border: 'border-purple-500/30' },
-          { type: 'Dragón', color: 'from-indigo-600/30 to-violet-600/30', border: 'border-indigo-500/30' },
-        ].map((t, i) => (
-          <div key={i} className={`p-4 rounded-xl bg-gradient-to-b ${t.color} border ${t.border} backdrop-blur-xl transition-all duration-300 group text-center flex flex-col items-center justify-center gap-2 hover:scale-105 cursor-default h-24`}>
-            <h3 className="font-bold text-white text-[10px] font-space tracking-wider uppercase">{t.type}</h3>
+          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto pt-4">
+            <Link 
+              href="/register"
+              className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-bold tracking-widest uppercase rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,0,0,0.2)] hover:shadow-[0_0_30px_rgba(255,0,0,0.4)] focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent focus:ring-red-500 font-space text-sm"
+            >
+              Nuevo Entrenador
+            </Link>
+            <Link 
+              href="/login"
+              className="inline-flex items-center justify-center px-8 py-4 bg-black/40 hover:bg-black/60 text-white font-bold tracking-widest uppercase border border-white/20 hover:border-red-500/30 backdrop-blur-md rounded-xl transition-all duration-300 font-space text-sm"
+            >
+              Accesar PC
+            </Link>
           </div>
-        ))}
+
+        </div>
+
+        {/* Right Column - CSS Pokeball Premium */}
+        <div className="relative w-full max-w-lg mx-auto lg:ml-auto flex items-center justify-center">
+            
+            <div className="relative group">
+              {/* Resplandor trasero animado */}
+               <div className="absolute -inset-10 bg-red-500/20 rounded-full blur-3xl -z-10 animate-pulse group-hover:bg-red-500/30 transition-colors duration-500" />
+               <div className="absolute -inset-20 border border-red-500/10 rounded-full -z-10 animate-[spin_10s_linear_infinite]" />
+               
+               {/* Pokebola 100% CSS */}
+               <div className="w-56 h-56 md:w-72 md:h-72 rounded-full border-8 border-white/90 flex items-center justify-center bg-black/40 backdrop-blur-xl shadow-[0_0_60px_rgba(255,0,0,0.4)] relative overflow-hidden group-hover:scale-105 transition-transform duration-700">
+                  {/* Mitad superior (Roja Holográfica) */}
+                  <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-red-500/60 to-red-600/40" />
+                  
+                  {/* Mitad inferior (Cristal) */}
+                  <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-white/10 to-transparent" />
+                  
+                  {/* Línea divisoria */}
+                  <div className="absolute top-1/2 left-0 w-full h-[6px] bg-white/90 -translate-y-1/2 z-10 shadow-[0_0_10px_rgba(255,255,255,0.5)]" />
+                  
+                  {/* Botón central (Anillo exterior) */}
+                  <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border-4 md:border-[6px] border-white/90 bg-black/60 relative z-20 shadow-[0_0_20px_rgba(0,0,0,0.8)] inset-shadow flex items-center justify-center backdrop-blur-md">
+                     {/* Botón central (Pulsador interior) */}
+                     <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/80 border border-white/50 group-hover:bg-red-400 group-hover:shadow-[0_0_25px_rgba(255,0,0,1)] transition-all duration-300" />
+                  </div>
+               </div>
+
+               {/* Stats de Búsqueda Biológica */}
+               <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap bg-black/50 border border-white/10 text-white/70 text-[10px] font-mono tracking-[0.2em] px-4 py-2 rounded-full backdrop-blur-md uppercase flex items-center gap-2">
+                 <DatabaseIcon size={12} className="text-red-400 animate-pulse" />
+                 Conectado a la Red Kanto...
+               </div>
+            </div>
+
+        </div>
+
       </div>
 
-      <div className="mt-20 opacity-20 flex items-center gap-6">
-        <div className="h-[1px] w-32 bg-gradient-to-r from-transparent to-red-500" />
-        <div className="w-3 h-3 rounded-full border border-red-500/50" />
-        <div className="h-[1px] w-32 bg-gradient-to-l from-transparent to-red-500" />
-      </div>
-      <p className="mt-4 text-white/15 text-[10px] font-mono tracking-[0.4em] uppercase">Caja Pokémon // Prueba Técnica N3X</p>
     </div>
   );
 }

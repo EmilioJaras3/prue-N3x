@@ -13,6 +13,12 @@ export default function RegisterForm() {
     password: '',
     full_name: '',
   });
+  const [fieldErrors, setFieldErrors] = useState<{
+    username?: string;
+    email?: string;
+    password?: string;
+    full_name?: string;
+  }>({});
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -29,13 +35,24 @@ export default function RegisterForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError('');
-    setLoading(true);
+    setFieldErrors({});
 
-    if (formData.password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres.');
-      setLoading(false);
+    // Validaciones Estéticas Manuales
+    const newErrors: typeof fieldErrors = {};
+    if (!formData.username) newErrors.username = 'El ID de Entrenador es obligatorio';
+    if (!formData.full_name) newErrors.full_name = 'El Nombre Oficial es obligatorio';
+    if (!formData.email) newErrors.email = 'El correo es obligatorio';
+    else if (!/^\S+@\S+\.\S+$/.test(formData.email)) newErrors.email = 'Formato de correo inválido';
+    
+    if (!formData.password) newErrors.password = 'La Clave Secreta es obligatoria';
+    else if (formData.password.length < 6) newErrors.password = 'La clave debe tener al menos 6 caracteres';
+
+    if (Object.keys(newErrors).length > 0) {
+      setFieldErrors(newErrors);
       return;
     }
+
+    setLoading(true);
 
     try {
       const result = await registerAction(formData);
@@ -65,7 +82,7 @@ export default function RegisterForm() {
   }
 
   return (
-    <div className="w-full max-w-lg mx-auto animate-fade-in">
+    <div className="w-full max-w-lg mx-auto animate-fade-in text-left">
       <div className="bg-black/40 backdrop-blur-3xl border border-red-500/20 rounded-3xl p-8 shadow-[0_0_80px_rgba(255,0,0,0.15)] relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 bg-red-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-40 h-40 bg-red-900/40 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
@@ -96,7 +113,7 @@ export default function RegisterForm() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <form onSubmit={handleSubmit} noValidate className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="md:col-span-1 space-y-2">
               <label className="text-red-200/70 text-xs font-bold tracking-widest uppercase ml-1">ID de Entrenador</label>
               <div className="relative">
@@ -104,11 +121,14 @@ export default function RegisterForm() {
                 <input
                   type="text"
                   placeholder="ej: ash_ketchum"
-                  required
-                  className="w-full pl-10 pr-4 py-3 bg-black/50 border border-white/10 rounded-xl text-white focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 outline-none transition-all placeholder:text-white/20 font-mono text-sm"
-                  onChange={e => setFormData({ ...formData, username: e.target.value })}
+                  className={`w-full pl-10 pr-4 py-3 bg-black/50 border ${fieldErrors.username ? 'border-red-500/50' : 'border-white/10'} rounded-xl text-white focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 outline-none transition-all placeholder:text-white/20 font-mono text-sm`}
+                  onChange={e => {
+                    setFormData({ ...formData, username: e.target.value });
+                    if (fieldErrors.username) setFieldErrors({ ...fieldErrors, username: undefined });
+                  }}
                 />
               </div>
+              {fieldErrors.username && <p className="text-red-500 text-[10px] font-bold uppercase tracking-wider ml-1 animate-fade-in">{fieldErrors.username}</p>}
             </div>
 
             <div className="md:col-span-1 space-y-2">
@@ -116,9 +136,13 @@ export default function RegisterForm() {
               <input
                 type="text"
                 placeholder="Nombre en la liga"
-                className="w-full px-4 py-3 bg-black/50 border border-white/10 rounded-xl text-white focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 outline-none transition-all placeholder:text-white/20 font-mono text-sm"
-                onChange={e => setFormData({ ...formData, full_name: e.target.value })}
+                className={`w-full px-4 py-3 bg-black/50 border ${fieldErrors.full_name ? 'border-red-500/50' : 'border-white/10'} rounded-xl text-white focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 outline-none transition-all placeholder:text-white/20 font-mono text-sm`}
+                onChange={e => {
+                  setFormData({ ...formData, full_name: e.target.value });
+                  if (fieldErrors.full_name) setFieldErrors({ ...fieldErrors, full_name: undefined });
+                }}
               />
+              {fieldErrors.full_name && <p className="text-red-500 text-[10px] font-bold uppercase tracking-wider ml-1 animate-fade-in">{fieldErrors.full_name}</p>}
             </div>
 
             <div className="md:col-span-2 space-y-2">
@@ -128,11 +152,14 @@ export default function RegisterForm() {
                 <input
                   type="email"
                   placeholder="entrenador@kanto.com"
-                  required
-                  className="w-full pl-10 pr-4 py-3 bg-black/50 border border-white/10 rounded-xl text-white focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 outline-none transition-all placeholder:text-white/20 font-mono text-sm"
-                  onChange={e => setFormData({ ...formData, email: e.target.value })}
+                  className={`w-full pl-10 pr-4 py-3 bg-black/50 border ${fieldErrors.email ? 'border-red-500/50' : 'border-white/10'} rounded-xl text-white focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 outline-none transition-all placeholder:text-white/20 font-mono text-sm`}
+                  onChange={e => {
+                    setFormData({ ...formData, email: e.target.value });
+                    if (fieldErrors.email) setFieldErrors({ ...fieldErrors, email: undefined });
+                  }}
                 />
               </div>
+              {fieldErrors.email && <p className="text-red-500 text-[10px] font-bold uppercase tracking-wider ml-1 animate-fade-in">{fieldErrors.email}</p>}
             </div>
 
             <div className="md:col-span-2 space-y-2">
@@ -142,23 +169,24 @@ export default function RegisterForm() {
                 <input
                   type="password"
                   placeholder="Autorización requerida (mín. 6)"
-                  required
                   value={formData.password}
-                  className="w-full pl-10 pr-4 py-3 bg-black/50 border border-white/10 rounded-xl text-white focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 outline-none transition-all placeholder:text-white/20 font-mono text-sm tracking-widest"
+                  className={`w-full pl-10 pr-4 py-3 bg-black/50 border ${fieldErrors.password ? 'border-red-500/50' : 'border-white/10'} rounded-xl text-white focus:ring-1 focus:ring-red-500/50 focus:border-red-500/50 outline-none transition-all placeholder:text-white/20 font-mono text-sm tracking-widest`}
                   onChange={e => {
                     const val = e.target.value;
                     if (val === '' || /^[a-zA-Z0-9\.]*$/.test(val)) {
                       setFormData({ ...formData, password: val });
+                      if (fieldErrors.password) setFieldErrors({ ...fieldErrors, password: undefined });
                     }
                   }}
                 />
               </div>
+              {fieldErrors.password && <p className="text-red-500 text-[10px] font-bold uppercase tracking-wider ml-1 animate-fade-in">{fieldErrors.password}</p>}
             </div>
 
             <div className="md:col-span-2 mt-2">
               <button
                 type="submit"
-                disabled={loading || formData.password.length < 6}
+                disabled={loading}
                 className="w-full py-4 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 disabled:from-neutral-800 disabled:to-neutral-900 border border-red-400/30 text-white font-bold tracking-widest uppercase rounded-2xl transition-all duration-300 flex items-center justify-center gap-3 group disabled:opacity-30 disabled:cursor-not-allowed shadow-[0_0_20px_rgba(255,0,0,0.3)] hover:shadow-[0_0_30px_rgba(255,0,0,0.5)] font-space"
               >
                 {loading ? (
