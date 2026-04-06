@@ -8,7 +8,6 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen flex flex-col text-gray-900 font-inter">
-      {/* Dynamic Header */}
       <nav className="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center backdrop-blur-md bg-white/10 border-b border-white/10 shadow-sm animate-fade-in">
         <div className="flex items-center gap-3 group cursor-pointer" onClick={() => router.push('/')}>
           <div className="w-10 h-10 bg-yellow-400 rounded-xl flex items-center justify-center border-2 border-yellow-200">
@@ -32,11 +31,9 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* Hero Section - Full Screen Bleed */}
       <main className="flex-grow flex items-center px-12 md:px-24 pt-32 pb-20">
         <div className="w-full max-w-7xl mx-auto flex flex-col md:grid md:grid-cols-2 items-center gap-12">
           
-          {/* Left Content */}
           <div className="space-y-8 animate-fade-in text-center md:text-left z-10">
             
             <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-[1.1] text-gray-900">
@@ -73,12 +70,10 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Right Space Reserved for Mascot in Video */}
           <div className="hidden md:block" />
         </div>
       </main>
 
-      {/* Footer Info / Trust Badges */}
       <footer className="w-full py-8 mt-auto relative z-10">
         <div className="max-w-7xl mx-auto px-6 flex flex-col items-center gap-4">
           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">

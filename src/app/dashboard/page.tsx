@@ -89,7 +89,7 @@ export default async function DashboardPage() {
           <section className="bg-[#0A0A0A]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-lg relative overflow-hidden group">
             <div className="flex items-center gap-3 mb-6 border-b border-white/5 pb-4 relative z-10">
               <SearchIcon className="text-neutral-500 group-hover:text-neutral-300 transition-colors" size={20} />
-              <h2 className="text-base font-semibold font-manrope text-white/90 tracking-tight">Localizador en DB</h2>
+              <h2 className="text-base font-semibold font-manrope text-white/90 tracking-tight">Localizador</h2>
               <span className="ml-auto text-[10px] text-neutral-400 font-inter font-medium uppercase tracking-wide bg-neutral-900 border border-white/5 px-2 py-0.5 rounded-md">Búsqueda Global</span>
             </div>
             <PokemonSearch />

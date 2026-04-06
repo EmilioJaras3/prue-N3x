@@ -33,7 +33,6 @@ export default function RegisterForm() {
     setLoading(true);
 
     try {
-      // Map 'name' input to both username and full_name to satisfy the schema with 3 fields
       const result = await registerAction({
         username: name,
         full_name: name,
@@ -55,7 +54,6 @@ export default function RegisterForm() {
   return (
     <div className="w-full max-w-lg mx-auto animate-fade-in">
       <div className="glass-card-light rounded-[2.5rem] p-10 relative overflow-hidden group">
-        {/* Decorative Orbs */}
         <div className="absolute -top-12 -left-12 w-40 h-40 bg-blue-400/20 rounded-full blur-3xl group-hover:bg-blue-300/30 transition-all duration-700" />
         <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-yellow-400/10 rounded-full blur-3xl transition-all duration-700" />
 

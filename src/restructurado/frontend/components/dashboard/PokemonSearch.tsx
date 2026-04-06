@@ -52,7 +52,6 @@ export default function PokemonSearch() {
 
   return (
     <section className="space-y-4">
-      {/* Search Bar */}
       <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1 group">
           <SearchIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-500 transition-colors group-focus-within:text-neutral-300" size={16} />

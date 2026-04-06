@@ -56,7 +56,6 @@ export default function LoginForm() {
   return (
     <div className="w-full max-w-md mx-auto animate-fade-in">
       <div className="glass-card-light rounded-[2.5rem] p-10 relative overflow-hidden group">
-        {/* Decorative Orbs inside card */}
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-yellow-400/20 rounded-full blur-3xl group-hover:bg-yellow-300/30 transition-all duration-700" />
         <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-400/10 rounded-full blur-3xl transition-all duration-700" />
 
