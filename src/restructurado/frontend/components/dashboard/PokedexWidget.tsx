@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { fetchRandomPokemon, PokemonData } from '@/restructurado/backend/actions/pokemon.actions';
 import { ScanIcon, ShieldAlertIcon, ActivityIcon, FingerprintIcon } from 'lucide-react';
 import { usePokemonStore } from '@/restructurado/frontend/store/pokemonStore';
+import PokedexSkeleton from './PokedexSkeleton';
 
 export default function PokedexWidget() {
   const { getRegionRange, selectedRegion } = usePokemonStore();
@@ -64,12 +65,7 @@ export default function PokedexWidget() {
             </div>
           </div>
         ) : loading && !pokemon ? (
-          <div className="flex h-full items-center justify-center animate-pulse">
-            <div className="flex flex-col items-center gap-3">
-              <ScanIcon className="text-neutral-600 animate-[spin_4s_linear_infinite]" size={32} />
-              <p className="text-neutral-600 text-xs font-inter tracking-wide">Descifrando datos…</p>
-            </div>
-          </div>
+          <PokedexSkeleton />
         ) : pokemon ? (
           <div className="flex flex-col md:flex-row gap-8 animate-in fade-in slide-in-from-bottom-2 duration-700">
             {/* Imagen Minimalista */}

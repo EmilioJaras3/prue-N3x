@@ -61,7 +61,7 @@ export async function fetchRandomPokemon(minId: number = 1, maxId: number = 151)
 
     return { success: true, data: pokemon };
   } catch (error) {
-    return { success: false, error: 'No se pudo desencriptar la información del espécimen.' };
+    return { success: false, error: 'No se pudo obtener el espécimen.' };
   }
 }
 
