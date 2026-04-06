@@ -33,18 +33,11 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section - Full Screen Bleed */}
-      <main className="flex-grow flex items-center px-12 md:px-24">
+      <main className="flex-grow flex items-center px-12 md:px-24 pt-32 pb-20">
         <div className="w-full max-w-7xl mx-auto flex flex-col md:grid md:grid-cols-2 items-center gap-12">
           
           {/* Left Content */}
           <div className="space-y-8 animate-fade-in text-center md:text-left z-10">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-100/50 border border-yellow-200 rounded-full text-amber-700 text-[10px] font-black uppercase tracking-[0.2em] shadow-sm">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
-              </span>
-              Prueba Técnica - Edición Premium 2026
-            </div>
             
             <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-[1.1] text-gray-900">
               Registra a todos <br/>
