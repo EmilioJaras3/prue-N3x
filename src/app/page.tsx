@@ -45,7 +45,7 @@ export default function LandingPage() {
             </h1>
             
             <p className="max-w-md text-base md:text-lg text-gray-600 font-semibold leading-relaxed font-manrope">
-              Sé el mejor maestro Pokémon y registra a todos los que puedas. Una plataforma segura, modular e inmersiva con blindaje OWASP.
+              Sé el mejor maestro Pokémon y registra a todos los que puedas. 
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">
