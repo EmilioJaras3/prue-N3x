@@ -18,9 +18,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className={`${inter.variable} ${manrope.variable}`} suppressHydrationWarning>
-      <body className="bg-neutral-950 font-inter antialiased text-white selection:bg-cyan-500/30" suppressHydrationWarning>
+      <body className="bg-white font-inter antialiased text-gray-900 selection:bg-blue-200" suppressHydrationWarning>
         <VideoBackground />
-        <main className="relative z-10 min-h-screen flex flex-col justify-center items-center p-4">
+        <main className="relative z-10 min-h-screen">
           {children}
         </main>
       </body>

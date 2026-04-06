@@ -1,84 +1,103 @@
-import Link from 'next/link';
-import { DatabaseIcon } from 'lucide-react';
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { ArrowRightIcon, ShieldIcon, ActivityIcon, GlobeIcon } from 'lucide-react';
 
 export default function LandingPage() {
+  const router = useRouter();
+
   return (
-    <div className="min-h-screen w-full bg-transparent text-white flex flex-col items-center justify-center relative overflow-hidden font-inter selection:bg-red-500/30">
-      
-      {/* Background Ambience sutil (para no tapar el video glboal) */}
-      <div className="absolute top-[-20%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-red-600/10 blur-[150px] mix-blend-screen pointer-events-none" />
+    <div className="min-h-screen flex flex-col text-gray-900 font-inter">
+      {/* Dynamic Header */}
+      <nav className="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center backdrop-blur-md bg-white/10 border-b border-white/10 shadow-sm animate-fade-in">
+        <div className="flex items-center gap-3 group cursor-pointer" onClick={() => router.push('/')}>
+          <div className="w-10 h-10 bg-yellow-400 rounded-xl flex items-center justify-center border-2 border-yellow-200">
+            <span className="text-amber-900 font-black text-xl italic">P</span>
+          </div>
+          <span className="text-2xl font-black tracking-tighter text-blue-600 group-hover:text-amber-500 transition-colors">DASHBOARD</span>
+        </div>
+        <div className="flex gap-4">
+          <button 
+            onClick={() => router.push('/login')}
+            className="px-6 py-2.5 rounded-2xl font-bold text-sm text-gray-600 hover:text-blue-500 hover:bg-white/50 transition-all"
+          >
+            Entrar
+          </button>
+          <button 
+            onClick={() => router.push('/register')}
+            className="px-6 py-2.5 bg-blue-600 text-white rounded-2xl font-bold text-sm shadow-[0_10px_20px_rgba(37,99,235,0.2)] hover:shadow-[0_15px_30px_rgba(37,99,235,0.4)] hover:-translate-y-0.5 transition-all active:scale-95"
+          >
+            Registrarse
+          </button>
+        </div>
+      </nav>
 
-      <div className="w-full max-w-7xl mx-auto px-6 py-12 md:py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
-        
-        {/* Left Column - Hero Text */}
-        <div className="flex flex-col items-start text-left space-y-8">
+      {/* Hero Section - Full Screen Bleed */}
+      <main className="flex-grow flex items-center px-12 md:px-24">
+        <div className="w-full max-w-7xl mx-auto flex flex-col md:grid md:grid-cols-2 items-center gap-12">
           
-          <h1 className="text-5xl md:text-7xl font-black font-manrope tracking-tighter leading-[1.1]">
-            <span className="text-white">Explora.</span><br />
-            <span className="text-neutral-500">Clasifica.</span><br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-rose-400">
-              Colecciona.
-            </span>
-          </h1>
-          
-          <p className="text-lg text-neutral-300 font-inter max-w-lg leading-relaxed">
-            Tu propio Sistema de Almacenamiento Pokémon. Inicia sesión en tu PC para consultar la Pokédex Nacional, transferir nuevas especies capturadas y organizar a todo tu equipo.
-          </p>
+          {/* Left Content */}
+          <div className="space-y-8 animate-fade-in text-center md:text-left z-10">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-100/50 border border-yellow-200 rounded-full text-amber-700 text-[10px] font-black uppercase tracking-[0.2em] shadow-sm">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+              </span>
+              Prueba Técnica - Edición Premium 2026
+            </div>
+            
+            <h1 className="text-6xl md:text-8xl font-black tracking-tight leading-[0.9] text-gray-900">
+              Tu Pokédex <br/>
+              <span className="text-blue-600 italic">Evolucionada</span>.
+            </h1>
+            
+            <p className="max-w-md text-lg md:text-xl text-gray-500 font-medium leading-relaxed font-manrope">
+              Una plataforma segura, modular e inmersiva para investigadores de alto nivel. Gestión de datos en tiempo real con blindaje OWASP.
+            </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto pt-4">
-            <Link 
-              href="/register"
-              className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-bold tracking-widest uppercase rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(255,0,0,0.2)] hover:shadow-[0_0_30px_rgba(255,0,0,0.4)] focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent focus:ring-red-500 font-space text-sm"
-            >
-              Nuevo Entrenador
-            </Link>
-            <Link 
-              href="/login"
-              className="inline-flex items-center justify-center px-8 py-4 bg-black/40 hover:bg-black/60 text-white font-bold tracking-widest uppercase border border-white/20 hover:border-red-500/30 backdrop-blur-md rounded-xl transition-all duration-300 font-space text-sm"
-            >
-              Accesar PC
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">
+              <button 
+                onClick={() => router.push('/register')}
+                className="group relative px-8 py-5 bg-yellow-400 hover:bg-yellow-300 text-amber-950 font-black text-lg rounded-[2rem] shadow-[0_20px_50px_rgba(251,191,36,0.3)] hover:shadow-[0_25px_60px_rgba(251,191,36,0.5)] transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-3 overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                Deseo mi ID <ArrowRightIcon className="group-hover:translate-x-1 transition-transform" />
+              </button>
+              
+              <div className="flex items-center gap-6 px-4">
+                <div className="flex -space-x-3">
+                  {[1, 2, 3].map(i => (
+                    <div key={i} className="w-10 h-10 border-2 border-white rounded-full bg-gray-100 overflow-hidden ring-4 ring-blue-500/5">
+                      <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i * 25}.png`} alt="User" />
+                    </div>
+                  ))}
+                </div>
+                <div className="text-left">
+                  <p className="text-sm font-black text-gray-900">+5000</p>
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Registrados</p>
+                </div>
+              </div>
+            </div>
           </div>
 
+          {/* Right Space Reserved for Mascot in Video */}
+          <div className="hidden md:block" />
         </div>
+      </main>
 
-        {/* Right Column - CSS Pokeball Premium */}
-        <div className="relative w-full max-w-lg mx-auto lg:ml-auto flex items-center justify-center">
-            
-            <div className="relative group">
-              {/* Resplandor trasero animado */}
-               <div className="absolute -inset-10 bg-red-500/20 rounded-full blur-3xl -z-10 animate-pulse group-hover:bg-red-500/30 transition-colors duration-500" />
-               <div className="absolute -inset-20 border border-red-500/10 rounded-full -z-10 animate-[spin_10s_linear_infinite]" />
-               
-               {/* Pokebola 100% CSS */}
-               <div className="w-56 h-56 md:w-72 md:h-72 rounded-full border-8 border-white/90 flex items-center justify-center bg-black/40 backdrop-blur-xl shadow-[0_0_60px_rgba(255,0,0,0.4)] relative overflow-hidden group-hover:scale-105 transition-transform duration-700">
-                  {/* Mitad superior (Roja Holográfica) */}
-                  <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-red-500/60 to-red-600/40" />
-                  
-                  {/* Mitad inferior (Cristal) */}
-                  <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-white/10 to-transparent" />
-                  
-                  {/* Línea divisoria */}
-                  <div className="absolute top-1/2 left-0 w-full h-[6px] bg-white/90 -translate-y-1/2 z-10 shadow-[0_0_10px_rgba(255,255,255,0.5)]" />
-                  
-                  {/* Botón central (Anillo exterior) */}
-                  <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border-4 md:border-[6px] border-white/90 bg-black/60 relative z-20 shadow-[0_0_20px_rgba(0,0,0,0.8)] inset-shadow flex items-center justify-center backdrop-blur-md">
-                     {/* Botón central (Pulsador interior) */}
-                     <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/80 border border-white/50 group-hover:bg-red-400 group-hover:shadow-[0_0_25px_rgba(255,0,0,1)] transition-all duration-300" />
-                  </div>
-               </div>
-
-               {/* Stats de Búsqueda Biológica */}
-               <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap bg-black/50 border border-white/10 text-white/70 text-[10px] font-mono tracking-[0.2em] px-4 py-2 rounded-full backdrop-blur-md uppercase flex items-center gap-2">
-                 <DatabaseIcon size={12} className="text-red-400 animate-pulse" />
-                 Conectado a la Red Kanto...
-               </div>
-            </div>
-
+      {/* Footer Info / Trust Badges */}
+      <footer className="px-12 py-10 animate-fade-in delay-500">
+        <div className="max-w-7xl mx-auto flex flex-col md:row justify-between items-center gap-8 border-t border-gray-100 pt-10">
+          <div className="flex gap-12 grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all">
+            <div className="flex items-center gap-2"><ShieldIcon size={18} /> <span className="text-[10px] font-bold uppercase tracking-widest">OWASP Top 10</span></div>
+            <div className="flex items-center gap-2"><ActivityIcon size={18} /> <span className="text-[10px] font-bold uppercase tracking-widest">Modular Arc</span></div>
+            <div className="flex items-center gap-2"><GlobeIcon size={18} /> <span className="text-[10px] font-bold uppercase tracking-widest">Global Pokedex</span></div>
+          </div>
+          <p className="text-[10px] font-bold text-gray-300 uppercase tracking-[0.3em]">
+            © 2026 Advanced Agentic Coding - Deepmind Edition
+          </p>
         </div>
-
-      </div>
-
+      </footer>
     </div>
   );
 }
