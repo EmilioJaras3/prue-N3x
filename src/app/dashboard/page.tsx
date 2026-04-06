@@ -71,20 +71,22 @@ export default async function DashboardPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
-          <section className="bg-[#0A0A0A]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-lg relative overflow-hidden group">
-            <div className="flex items-center gap-3 mb-6 border-b border-white/5 pb-4 relative z-10 transition-colors duration-300">
-              <GlobeIcon className="text-neutral-500 group-hover:text-neutral-300 transition-colors" size={20} />
-              <h2 className="text-base font-semibold font-manrope text-white/90 tracking-tight">Análisis de Especies</h2>
-              <div className="ml-auto flex items-center gap-3">
-                <RegionSelector />
-                <div className="flex items-center gap-1.5 bg-neutral-900 px-2 py-1 rounded-md border border-white/5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-[10px] text-neutral-400 font-inter font-medium uppercase tracking-wide">Status Activo</span>
-                </div>
-              </div>
+      <section className="bg-[#0A0A0A]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 md:p-6 shadow-lg relative overflow-hidden group">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-6 border-b border-white/5 pb-4 relative z-10 transition-colors duration-300">
+          <div className="flex items-center gap-3">
+            <GlobeIcon className="text-neutral-500 group-hover:text-neutral-300 transition-colors" size={20} />
+            <h2 className="text-base font-semibold font-manrope text-white/90 tracking-tight">Análisis de Especies</h2>
+          </div>
+          <div className="w-full sm:ml-auto flex items-center justify-between sm:justify-end gap-3 mt-2 sm:mt-0">
+            <RegionSelector />
+            <div className="flex items-center gap-1.5 bg-neutral-900 px-2 py-1 rounded-md border border-white/5">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-[10px] text-neutral-400 font-inter font-medium uppercase tracking-wide">Status Activo</span>
             </div>
-            <PokedexWidget />
-          </section>
+          </div>
+        </div>
+        <PokedexWidget />
+      </section>
 
           <section className="bg-[#0A0A0A]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-lg relative overflow-hidden group">
             <div className="flex items-center gap-3 mb-6 border-b border-white/5 pb-4 relative z-10">
