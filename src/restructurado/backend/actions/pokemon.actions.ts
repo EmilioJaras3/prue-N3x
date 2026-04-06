@@ -28,9 +28,10 @@ async function getPokemonDescription(speciesUrl: string): Promise<string> {
   }
 }
 
-export async function fetchRandomPokemon(): Promise<{ success: boolean; data?: PokemonData; error?: string }> {
+export async function fetchRandomPokemon(minId: number = 1, maxId: number = 151): Promise<{ success: boolean; data?: PokemonData; error?: string }> {
   try {
-    const randomId = Math.floor(Math.random() * 151) + 1;
+    const range = maxId - minId + 1;
+    const randomId = Math.floor(Math.random() * range) + minId;
     
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`, {
       next: { revalidate: 0 }

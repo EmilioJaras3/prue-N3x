@@ -45,7 +45,7 @@ export default function LandingPage() {
             </h1>
             
             <p className="max-w-md text-base md:text-lg text-gray-600 font-semibold leading-relaxed font-manrope">
-              La herramienta definitiva para el Entrenador moderno. Gestiona tu colección con seguridad de grado profesional y un diseño inmersivo.
+              Sé el mejor maestro Pokémon y registra a todos los que puedas. Una plataforma segura, modular e inmersiva con blindaje OWASP.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">

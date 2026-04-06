@@ -3,8 +3,10 @@
 import { useState, useEffect } from 'react';
 import { fetchRandomPokemon, PokemonData } from '@/restructurado/backend/actions/pokemon.actions';
 import { ScanIcon, ShieldAlertIcon, ActivityIcon, FingerprintIcon } from 'lucide-react';
+import { usePokemonStore } from '@/restructurado/frontend/store/pokemonStore';
 
 export default function PokedexWidget() {
+  const { getRegionRange, selectedRegion } = usePokemonStore();
   const [pokemon, setPokemon] = useState<PokemonData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -12,7 +14,8 @@ export default function PokedexWidget() {
   const loadPokemon = async () => {
     setLoading(true);
     setError('');
-    const res = await fetchRandomPokemon();
+    const { min, max } = getRegionRange();
+    const res = await fetchRandomPokemon(min, max);
     if (res.success && res.data) {
       setPokemon(res.data);
     } else {
@@ -23,7 +26,7 @@ export default function PokedexWidget() {
 
   useEffect(() => {
     loadPokemon();
-  }, []);
+  }, [selectedRegion]);
 
   return (
     <article className="bg-[#0A0A0A]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 relative overflow-hidden group shadow-lg">

@@ -6,6 +6,8 @@ import { redirect } from 'next/navigation';
 import { PowerIcon, GlobeIcon, SearchIcon, UserIcon, ShieldCheckIcon, FingerprintIcon } from 'lucide-react';
 import { logoutAction } from '@/restructurado/backend/actions/auth.actions';
 
+import RegionSelector from '@/restructurado/frontend/components/dashboard/RegionSelector';
+
 export default async function DashboardPage() {
   const result = await getCurrentUser();
 
@@ -73,9 +75,12 @@ export default async function DashboardPage() {
             <div className="flex items-center gap-3 mb-6 border-b border-white/5 pb-4 relative z-10 transition-colors duration-300">
               <GlobeIcon className="text-neutral-500 group-hover:text-neutral-300 transition-colors" size={20} />
               <h2 className="text-base font-semibold font-manrope text-white/90 tracking-tight">Análisis de Especies</h2>
-              <div className="ml-auto flex items-center gap-1.5 bg-neutral-900 px-2 py-1 rounded-md border border-white/5">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-[10px] text-neutral-400 font-inter font-medium uppercase tracking-wide">Red Kanto</span>
+              <div className="ml-auto flex items-center gap-3">
+                <RegionSelector />
+                <div className="flex items-center gap-1.5 bg-neutral-900 px-2 py-1 rounded-md border border-white/5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-[10px] text-neutral-400 font-inter font-medium uppercase tracking-wide">Status Activo</span>
+                </div>
               </div>
             </div>
             <PokedexWidget />
