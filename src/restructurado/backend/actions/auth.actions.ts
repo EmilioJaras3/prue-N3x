@@ -123,14 +123,14 @@ export async function registerAction(
 
 export async function loginAction(
   input: LoginInput
-): Promise<ApiResponse<{ token: string }>> {
+): Promise<ApiResponse<{ userId: number }>> {
   try {
     const { ip } = await getClientInfo();
     
     const locked = await isAccountLocked(input.email, ip);
     if (locked) {
       await logAction(null, 'ACCOUNT_LOCKED', input.email);
-      return { success: false, error: 'Acceso bloqueado temporalmente por seguridad. Demasiados intentos.' };
+      return { success: false, error: 'Credenciales inválidas' };
     }
 
     const rl = rateLimitLogin(ip);
@@ -182,7 +182,7 @@ export async function loginAction(
       path: '/',
     });
 
-    return { success: true, data: { token } };
+    return { success: true, data: { userId: foundUser.id } };
   } catch (error: unknown) {
     if (error instanceof ZodError) {
       const fieldError = error.issues[0]?.message;
