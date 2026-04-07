@@ -46,7 +46,7 @@ async function logAction(
 
 async function isAccountLocked(email: string, ip: string): Promise<boolean> {
   const fifteenMinutesAgo = new Date(Date.now() - 15 * 60 * 1000);
-  
+
   // Buscar intentos fallidos por IP o por Email en los detalles
   const failedAttempts = await db
     .select()
@@ -126,11 +126,11 @@ export async function loginAction(
 ): Promise<ApiResponse<{ userId: number }>> {
   try {
     const { ip } = await getClientInfo();
-    
+
     const locked = await isAccountLocked(input.email, ip);
     if (locked) {
       await logAction(null, 'ACCOUNT_LOCKED', input.email);
-      return { success: false, error: 'Credenciales inválidas' };
+      return { success: false, error: 'Acceso bloqueado temporalmente por seguridad. Demasiados intentos.' };
     }
 
     const rl = rateLimitLogin(ip);
@@ -177,7 +177,7 @@ export async function loginAction(
     cookieStore.set('auth_token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      sameSite: 'strict',
       maxAge: 7 * 24 * 60 * 60,
       path: '/',
     });

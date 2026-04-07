@@ -60,11 +60,16 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
 
+    const ALLOWED_TYPES = ['PAGE_VIEW', 'SEARCH', 'EXPORT', 'CUSTOM'] as const;
+    const actionType = ALLOWED_TYPES.includes(body.action_type)
+      ? body.action_type
+      : 'CUSTOM';
+
     const [log] = await db
       .insert(action_logs)
       .values({
         user_id: payload.userId,
-        action_type: body.action_type || 'CUSTOM',
+        action_type: actionType,
         action_details: JSON.stringify(body.details || {}),
         ip_address:
           request.headers.get('x-forwarded-for') || 'unknown',

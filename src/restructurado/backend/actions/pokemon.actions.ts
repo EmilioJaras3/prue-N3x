@@ -15,6 +15,19 @@ export interface PokemonData {
   };
 }
 
+const TRUSTED_DOMAINS = ['raw.githubusercontent.com', 'assets.pokemon.com', 'pokeapi.co'];
+
+function validateImageUrl(url: string | null | undefined): string {
+  if (!url) return '/placeholder.png';
+  try {
+    const { hostname } = new URL(url);
+    if (!TRUSTED_DOMAINS.includes(hostname)) return '/placeholder.png';
+    return url;
+  } catch {
+    return '/placeholder.png';
+  }
+}
+
 async function getPokemonDescription(speciesUrl: string): Promise<string> {
   try {
     const res = await fetch(speciesUrl, { next: { revalidate: 3600 } });
